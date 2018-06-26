@@ -15,8 +15,12 @@ end
 horse_links.each do |name, link|
   uri = "http://db.netkeiba.com/#{link}"
   doc = Nokogiri::HTML(open(uri), nil, "EUC-JP")
-  doc.xpath("/html/body//div[@id='contents']/div[@id='db_main_box']//div[@class='horse_title']").each do |node|
-    name = node.xpath("./h1").to_s.encode "UTF-8"
+  doc.xpath("/html/body//div[@id='contents']").each do |node|
+    db_main_box = node.xpath("./div[@id='db_main_box']")
+
+    #基本データ1
+    horse_title = node.xpath(".//div[@class='horse_title']")
+    name = horse_title.xpath("./h1").to_s.encode "UTF-8"
     name = name.slice(/\>.*\</).gsub(/\<|\>/, "")
     if name.include?("外")
       name = name.split(/外/)[1].split(/[[:blank:]]/)[0]
@@ -24,13 +28,36 @@ horse_links.each do |name, link|
       name = name.split(/地/)[1].split(/[[:blank:]]/)[0]
     end
     name = name.split(/[[:blank:]]/)[0]
-    status = node.xpath("./p[@class='txt_01']").to_s.encode "UTF-8"
+    status = horse_title.xpath("./p[@class='txt_01']").to_s.encode "UTF-8"
     status = status.slice(/\>.*\</).gsub(/\<|\>/, "").split(/[[:blank:]]/)
     active_status = status[0]
     sex = status[1][0]
     age = status[1].slice(/\d+/)
     hair_color = status[2]
-    list = name, active_status, sex, age, hair_color
+
+    #基本データ2
+    main_data = node.xpath(".//div[@class='db_main_deta']")
+    profile = main_data.xpath(".//div[@class='db_prof_area_02']")
+    birth_day = profile.xpath("./table//tr[1]/td").to_s.encode "UTF-8"
+    birth_day = birth_day.slice(/\>.*\</).gsub(/\<|\>/, "")
+    trainer = profile.xpath(".//tr[2]/td").to_s.encode "UTF-8"
+    trainer = trainer.slice(/\>.*\</).gsub(/\<|\>/, "")
+    trainer = trainer.split[0].split(/\//)[0] + trainer.split[1]
+    owner = profile.xpath(".//tr[3]/td").to_s.encode "UTF-8"
+    owner = owner.slice(/\>.*\</).gsub(/\<|\>/, "").split(/title=/)[1].split(/\"/)[1]
+    producer = profile.xpath(".//tr[4]/td").to_s.encode "UTF-8"
+    producer = producer.slice(/\>.*\</).gsub(/\<|\>/, "").split(/title=/)[1].split(/\"/)[1]
+
+    #基本データ3
+    blood_table = profile.xpath(".//table[@class='blood_table']")
+    father = blood_table.xpath("./tr[1]/td[1]/a").to_s.encode "UTF-8"
+    father = father.slice(/\>.*\</).split(/\</)[0].split(/\>/)[1]
+    mother = blood_table.xpath("./tr[3]/td[1]/a").to_s.encode "UTF-8"
+    mother = mother.slice(/\>.*\</).split(/\</)[0].split(/\>/)[1]
+    g_father = blood_table.xpath("./tr[3]/td[2]/a").to_s.encode "UTF-8"
+    g_father = g_father.slice(/\>.*\</).split(/\</)[0].split(/\>/)[1]
+
+    list = name, active_status, sex, age, hair_color, birth_day, trainer, owner, producer, father, mother, g_father
     p list
   end
 end
