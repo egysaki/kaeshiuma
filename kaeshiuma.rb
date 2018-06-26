@@ -1,51 +1,61 @@
 require 'bundler/setup'
 Bundler.require
 
-opts = {
-  depth_limit: 0
-}
-
-html = (open('http://db.netkeiba.com/?pid=horse_top', "r:cp932").read.force_encoding('utf-8'))
-doc = Nokogiri::HTML.parse(html)
+#アネモネを使わない場合
+uri = 'http://db.netkeiba.com/?pid=horse_top'
+doc = Nokogiri::HTML(open(uri), nil, "EUC-JP")
+horse_links = {}
 doc.xpath("/html/body//div[@class='hitchart_block']//tbody/tr//a").each do |node|
-  title = node.to_s
-  puts title
+  node = node.to_s.encode "UTF-8"
+  link = node.slice(/\/horse\/\d*\//) 
+  name = node.slice(/\>.*\</).gsub(/\<|\>/, "")
+  horse_links[name] = link
 end
-#doc = Nokogiri::HTML(open('http://db.netkeiba.com/?pid=horse_top'), nil, 'CP932')
-#puts doc
-#puts 555
-#puts doc.css("/html//di")
-#puts doc.xpath("//div[@class='hitchart_block']")
-#puts 555
-#doc.xpath("/html/body//div[@class='hitchart_block']").each do |node|
-#puts node
-#  title = node.xpath("./td/a/").to_s
-#  puts title
-#end
 
-# AnemoneにクロールさせたいURLと設定を指定した上でクローラーを起動！
-Anemone.crawl("http://db.netkeiba.com/?pid=horse_top", opts) do |anemone|
-  # 指定したページのあらゆる情報(urlやhtmlなど)をゲットします。
-  anemone.on_every_page do |page|
-    #puts page.url
-    #i = 1 # 後で使います。
-    # page.docでnokogiriインスタンスを取得し、xpathで欲しい要素(ノード)を絞り込む
-    #page.doc.xpath("/html/body//section[@class='content']/div[contains(@class,'contentBody')]//li[contains(@class,'videoRanking')]/div[@class='itemContent']").each do |node|
-    #page.doc.xpath("/html/body//div[@class='hitchart_block']/table[@class='db_table']/tbody/tr").each do |node|
-    page.doc.xpath("/html/body//div[@class='hitchart_block']").each do |node|
-      puts 555
-      # 更に絞り込んでstring型に変換
-      title = node.xpath("./td/a/").to_s
-      # 更に絞り込んでstring型に変換      
-      #viewCount = node.xpath("./div[@class='itemData']//li[contains(@class,'view')]/span/text()").to_s 
-      # 表示形式に整形
-      puts title
-      #puts i.to_s + "位：再生数：" + viewCount + " | " + title
-      #puts "\n———————————————–\n"
-      #i += 1 # iは順位を示しています。あるランキングを上から順番に取り出しています。
-    end # node終わり
-  end # page終わり
-end # Anemone終わり
+horse_links.each do |name, link|
+  uri = "http://db.netkeiba.com/#{link}"
+  doc = Nokogiri::HTML(open(uri), nil, "EUC-JP")
+  doc.xpath("/html/body//div[@id='contents']/div[@id='db_main_box']//div[@class='horse_title']").each do |node|
+    name = node.xpath("./h1").to_s.encode "UTF-8"
+    name = name.slice(/\>.*\</).gsub(/\<|\>/, "")
+    if name.include?("外")
+      name = name.split(/外/)[1].split(/[[:blank:]]/)[0]
+    elsif name.include?("地")
+      name = name.split(/地/)[1].split(/[[:blank:]]/)[0]
+    end
+    name = name.split(/[[:blank:]]/)[0]
+    status = node.xpath("./p[@class='txt_01']").to_s.encode "UTF-8"
+    status = status.slice(/\>.*\</).gsub(/\<|\>/, "").split(/[[:blank:]]/)
+    active_status = status[0]
+    sex = status[1][0]
+    age = status[1].slice(/\d+/)
+    hair_color = status[2]
+    list = name, active_status, sex, age, hair_color
+    p list
+  end
+end
+
+
+#opts = {
+#  depth_limit: 0
+#}
+#
+#horse_links = {}
+#
+#Anemone.crawl("http://db.netkeiba.com/?pid=horse_top", opts) do |anemone|
+#  anemone.on_every_page do |page|
+#    doc = Nokogiri::HTML.parse(page.body.encode("UTF-8", "EUC-JP"))
+#    doc.xpath("//div[@class='hitchart_block']//tbody/tr//a").each do |node|
+#      # 更に絞り込んでstring型に変換
+#      link = node.to_s.slice(/\/horse\/\d*\//) 
+#      name = node.to_s.slice(/\>.*\</).gsub(/\<|\>/, "")
+#      horse_links[name] = link
+#    end
+#  end
+#puts 555
+#end
+#puts 555
+#puts horse_links
 
 
 #options = {
