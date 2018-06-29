@@ -22,10 +22,11 @@ horse_links.each do |name, link|
     horse_title = node.xpath(".//div[@class='horse_title']")
     name = horse_title.xpath("./h1").to_s.encode "UTF-8"
     name = name.slice(/\>.*\</).gsub(/\<|\>/, "")
+    origin_name = name
     if name.include?("外")
-      name = name.split(/外/)[1].split(/[[:blank:]]/)[0]
+      name = origin_name.split(/外/)[1].split(/[[:blank:]]/)[0]
     elsif name.include?("地")
-      name = name.split(/地/)[1].split(/[[:blank:]]/)[0]
+      name = origin_name.split(/地/)[1].split(/[[:blank:]]/)[0]
     end
     name = name.split(/[[:blank:]]/)[0]
     status = horse_title.xpath("./p[@class='txt_01']").to_s.encode "UTF-8"
@@ -42,11 +43,18 @@ horse_links.each do |name, link|
     birth_day = birth_day.slice(/\>.*\</).gsub(/\<|\>/, "")
     trainer = profile.xpath(".//tr[2]/td").to_s.encode "UTF-8"
     trainer = trainer.slice(/\>.*\</).gsub(/\<|\>/, "")
-    trainer = trainer.split[0].split(/\//)[0] + trainer.split[1]
+    trainer = trainer.split[0].split(/\//)[0] + trainer.split[1].split(/\//)[0]
     owner = profile.xpath(".//tr[3]/td").to_s.encode "UTF-8"
     owner = owner.slice(/\>.*\</).gsub(/\<|\>/, "").split(/title=/)[1].split(/\"/)[1]
-    producer = profile.xpath(".//tr[4]/td").to_s.encode "UTF-8"
-    producer = producer.slice(/\>.*\</).gsub(/\<|\>/, "").split(/title=/)[1].split(/\"/)[1]
+    if origin_name.include?("外") 
+      producer = ''
+    else
+      producer = profile.xpath(".//tr[4]/td").to_s.encode "UTF-8"
+      if producer.include?('owner_info')
+        producer = profile.xpath(".//tr[5]/td").to_s.encode "UTF-8"
+      end
+      producer = producer.slice(/\>.*\</).gsub(/\<|\>/, "").split(/title=/)[1].split(/\"/)[1]
+    end
 
     #基本データ3
     blood_table = profile.xpath(".//table[@class='blood_table']")
@@ -60,6 +68,7 @@ horse_links.each do |name, link|
     list = name, active_status, sex, age, hair_color, birth_day, trainer, owner, producer, father, mother, g_father
     p list
   end
+  sleep 1
 end
 
 
