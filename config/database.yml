@@ -1,0 +1,21 @@
+default: &default
+  adapter: mysql2
+  encoding: utf8
+  charset: utf8
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  host: localhost
+  username: kaeshiuma
+  password: kaeshiuma
+  socket: /var/lib/mysql/mysql.sock
+
+development:
+  <<: *default
+  database: kaeshiuma_development
+
+test:
+  <<: *default
+  database: kaeshiuma_test
+
+production:
+  <<: *default
+  database: kaeshiuma_production
