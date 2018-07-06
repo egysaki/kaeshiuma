@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180703021303) do
+ActiveRecord::Schema.define(version: 20180706082647) do
 
   create_table "horses", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name", null: false
@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(version: 20180703021303) do
     t.integer "blood_line_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "link", null: false
   end
 
 end
