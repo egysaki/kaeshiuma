@@ -1,5 +1,21 @@
 require 'line/bot'
 
+module Line
+  module Bot
+    class HTTPClient
+      def http(uri)
+        proxy = URI(ENV["FIXIE_URL"])
+        http = Net::HTTP.new(uri.host, uri.port, proxy.host, proxy.port, proxy.user, proxy.password)
+        if uri.scheme == "https"
+          http.use_ssl = true
+        end
+
+        http
+      end
+    end
+  end
+end
+
 class WebhookController < ApplicationController
   protect_from_forgery except: :callback
 
@@ -39,7 +55,7 @@ class WebhookController < ApplicationController
           }
           end
           response = client.reply_message(event['replyToken'], message)
-          p response
+          puts response
         end
       end
     }
