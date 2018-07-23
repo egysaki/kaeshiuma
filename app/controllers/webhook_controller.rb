@@ -25,7 +25,8 @@ class WebhookController < ApplicationController
         end
       end
     }
-    render :nothing => true, status: :ok
+    #render :nothing => true, status: :ok
+    head :ok
   end
 
   #Lineからのcallbackか認証
