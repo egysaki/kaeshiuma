@@ -5,6 +5,7 @@ module Api
 
     def self.return_course_info(course, url)
       self.course_defined(course)
+      return if @info.blank?
 
       contents_body = []
       @info.each do |distance, detail|
@@ -78,7 +79,7 @@ module Api
 
     def self.course_defined(course)
       @info = nil
-      @image_path = nil
+      @image_path = '/assets/course/'
       if course =~ /^東京芝$/
         @info = {'1400': nil,
                  '1600': nil,
@@ -89,7 +90,7 @@ module Api
                  '2500': nil,
                  '3400': nil
                 }
-        @image_path = '/assets/course/tokyo-turf-'
+        @image_path = @image_path + 'tokyo-turf-'
       end
     end
 
