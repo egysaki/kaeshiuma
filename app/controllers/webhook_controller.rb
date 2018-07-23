@@ -38,9 +38,9 @@ class WebhookController < ApplicationController
             previewImageUrl: '/assets/course/tokyo-turf-2000.png'
           }
           end
+          response = client.reply_message(event['replyToken'], message)
+          p response
         end
-
-        client.reply_message(event['replyToken'], message)
       end
     }
     head :ok
