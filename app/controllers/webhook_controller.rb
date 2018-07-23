@@ -45,13 +45,13 @@ class WebhookController < ApplicationController
             text: event.message['text']
           }
 
-          #url = root_url(only_path: false)
+          url = root_url(only_path: false)
           case event.message['text']
           when '東京芝2000'
           message = {
             type: 'image',
-            originalContentUrl: '/assets/course/tokyo-turf-2000.png',
-            previewImageUrl: '/assets/course/tokyo-turf-2000.png'
+            originalContentUrl: url + '/assets/course/tokyo-turf-2000.png',
+            previewImageUrl: url + '/assets/course/tokyo-turf-2000.png'
           }
           end
           response = client.reply_message(event['replyToken'], message)
