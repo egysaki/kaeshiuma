@@ -40,12 +40,6 @@ class WebhookController < ApplicationController
       when Line::Bot::Event::Message
         case event.type
         when Line::Bot::Event::MessageType::Text
-         #おうむ返し
-         # message = {
-         #   type: 'text',
-         #   text: event.message['text']
-         # }
-
           url = root_url(only_path: false)
           contents = Api::CourseInfo.return_course_info(event.message['text'], url)
           if contents
@@ -54,6 +48,12 @@ class WebhookController < ApplicationController
               altText: '各競馬場コース情報を表示',
               contents: contents
             }
+          else
+          message = {
+            type: 'text',
+            text: '未対応のコマンドです。'
+          }
+          end
           response = client.reply_message(event['replyToken'], message)
           puts response
           end

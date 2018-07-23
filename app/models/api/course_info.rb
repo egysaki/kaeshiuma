@@ -20,7 +20,7 @@ module Api
             contents: [
               {
                 type: 'text',
-                text: "東京 芝 #{distance.to_s}m",
+                text: "#{@name} #{distance.to_s}m",
                 size: 'xl',
                 weight: 'bold',
                 wrap: true
@@ -40,44 +40,13 @@ module Api
       contents = {
         type: 'carousel',
         contents: contents_body
-        #contents: [
-         # @info.each do |distance, detail|
-         #   {
-         #     type: 'bubble',
-         #     hero: {
-         #       type: 'image',
-         #       url: url + @image_path + distance.to_s + '.jpg',
-         #       size: 'full'
-         #     },
-         #     body: {
-         #       type: 'box',
-         #       layout: 'vertical',
-         #       contents: [
-         #         {
-         #           type: 'text',
-         #           text: "東京 芝 #{distance.to_s}m",
-         #           size: 'xl',
-         #           weight: 'bold',
-         #           wrap: true
-         #         },
-         #         {
-         #           type: 'text',
-         #           text: detail,
-         #           size: 'sm',
-         #           weight: 'bold',
-         #           wrap: true
-         #         }
-         #       ]
-         #     }
-         #   }
-         # end
-        #]
       }
     end
 
     def self.course_defined(course)
       @info = nil
       @image_path = '/assets/course/'
+      @name = nil
       if course =~ /^東京芝$/
         @info = {'1400': 'test',
                  '1600': 'test',
@@ -89,6 +58,7 @@ module Api
                  '3400': 'test'
                 }
         @image_path = @image_path + 'tokyo-turf-'
+        @name = '東京 芝'
       end
     end
 
