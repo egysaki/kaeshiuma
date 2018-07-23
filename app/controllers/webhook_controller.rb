@@ -1,3 +1,5 @@
+require 'line/bot'
+
 class WebhookController < ApplicationController
   protect_from_forgery except: :callback
 
@@ -36,8 +38,9 @@ class WebhookController < ApplicationController
             previewImageUrl: '/assets/course/tokyo-turf-2000.png'
           }
           end
-          client.reply_message(event['replyToken'], message)
         end
+
+        client.reply_message(event['replyToken'], message)
       end
     }
     head :ok
@@ -45,7 +48,6 @@ class WebhookController < ApplicationController
 
   private
 
-  # verify access from LINE
   def is_validate_signature
     signature = request.headers["X-LINE-Signature"]
     http_request_body = request.raw_post
