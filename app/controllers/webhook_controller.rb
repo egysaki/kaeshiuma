@@ -1,7 +1,11 @@
 class WebhookController < ApplicationController
 
   def callback
-    client = LineClient.new
+    client = Line::Bot::Client.new { |config|
+      config.channel_secret = CHANNEL_SECRET
+      config.channel_token = CHANNEL_ACCESS_TOKEN
+    }
+
     body = request.body.read
     events = client.parse_events_from(body)
 
