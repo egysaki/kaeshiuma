@@ -11,7 +11,7 @@ module Api
               hero: {
                 type: 'image',
                 url: url + '/assets/course/tokyo-turf-2000.jpg',
-                size: 'full',
+                size: 'full'
               },
               body: {
                 type: 'box',
@@ -38,7 +38,7 @@ module Api
                   backgroudColor: '#ffffff'
                 }
               }
-            },
+            }
           ]
         }
       end
