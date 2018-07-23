@@ -46,7 +46,7 @@ class LineClient
   def initialize
     @client ||= Line::Bot::Client.new { |config|
       config.channel_secret = CHANNEL_SECRET
-      condfig.channel_token = CHANNEL_ACCESS_TOKEN
+      config.channel_token = CHANNEL_ACCESS_TOKEN
     }
   end
 
