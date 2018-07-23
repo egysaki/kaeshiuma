@@ -50,8 +50,8 @@ class WebhookController < ApplicationController
           when '東京芝2000'
           message = {
             type: 'image',
-            originalContentUrl: url + '/assets/course/tokyo-turf-2000.png',
-            previewImageUrl: url + '/assets/course/tokyo-turf-2000.png'
+            originalContentUrl: url + '/assets/course/tokyo-turf-2000.jpeg',
+            previewImageUrl: url + '/assets/course/tokyo-turf-2000.jpeg'
           }
           end
           response = client.reply_message(event['replyToken'], message)
