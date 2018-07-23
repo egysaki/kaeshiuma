@@ -50,7 +50,7 @@ class LineClient
     }
   end
 
-  def reply(reply_tooken, text)
+  def reply(reply_token, text)
     client.reply_message(reply_token, text_message(message))
   end
 
