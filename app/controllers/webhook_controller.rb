@@ -48,7 +48,7 @@ class WebhookController < ApplicationController
 
           url = root_url(only_path: false)
           contents = Api::CourseInfo.return_course_info(event.message['text'], url)
-          unless contents
+          if contents
             message = {
               type: 'flex',
               altText: '各競馬場コース情報を表示',
