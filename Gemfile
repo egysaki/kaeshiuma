@@ -33,9 +33,11 @@ gem 'jbuilder', '~> 2.5'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+#スクレイピング用
 gem 'nokogiri'
 gem 'mechanize'
 
+#line用
 gem 'dotenv-rails'
 gem 'faraday'
 gem 'faraday_middleware'
