@@ -93,7 +93,7 @@ class WebhookController < ApplicationController
           }
           message = {
             type: 'flex',
-            altText: '各競馬場コース情報を表示'
+            altText: '各競馬場コース情報を表示',
             contents: contents
           }
           end
