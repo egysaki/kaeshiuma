@@ -44,30 +44,4 @@ class WebhookController < ApplicationController
     signature == signature_answer
   end
 
-
- # def callback
-
- #   event = params["events"][0]
- #   event_type = event["type"]
- #   reply_token = event["replyToken"]
-
- #   case event_type
- #   when "message"
- #     input_text = event["message"]["text"]
- #     output_text = input_text
- #   end
-
- #   #client = LineClient.new(CHANNEL_ACCESS_TOKEN, OUTBOUND_PROXY)
- #   client = LineClient.new
- #   res = client.reply(reply_token, output_text)
-
- #   if res.status == 200
- #     logger.info({success: res})
- #   else
- #     logger.info({fail: res})
- #   end
-
- #   render :nothing => true, status: :ok
- # end
-
 end
