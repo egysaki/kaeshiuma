@@ -68,11 +68,6 @@ module Api
                   wrap: true
                 }
               ]
-            },
-            styles: {
-              hero: {
-                backgroudColor: '#ffffff'
-              }
             }
           }
         ]
