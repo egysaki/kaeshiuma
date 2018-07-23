@@ -25,7 +25,7 @@ class WebhookController < ApplicationController
  # end
 
   #Lineからのcallbackか認証
-  protect_from_forgery with: :null_session
+  #protect_from_forgery with: :null_session
 
   #CHANNEL_SECRET = '066a0e3810610a05f319b2a4b9537d7f'
   #OUTBOUND_PROXY = 'http://fixie:VIyppzCnwQLL4wF@velodrome.usefixie.com:80'
