@@ -39,6 +39,7 @@ gem 'mechanize'
 gem 'dotenv-rails'
 gem 'faraday'
 gem 'faraday_middleware'
+gem 'line-bot-api'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
