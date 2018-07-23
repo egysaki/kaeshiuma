@@ -47,17 +47,54 @@ class WebhookController < ApplicationController
 
           url = root_url(only_path: false)
           case event.message['text']
-          when '東京芝2000'
-          message = {
-            type: 'image',
-            originalContentUrl: url + '/assets/course/tokyo-turf-2000.jpeg',
-            previewImageUrl: url + '/assets/course/tokyo-turf-2000.jpeg'
+          when '東京芝'
+         # message = {
+         #   type: 'image',
+         #   originalContentUrl: url + '/assets/course/tokyo-turf-2000.jpg',
+         #   previewImageUrl: url + '/assets/course/tokyo-turf-2000.jpg'
+         # }
+          contents = {
+            type: 'carousel',
+            contents: [
+              {
+                type: 'bubble',
+                hero: {
+                  type: 'image',
+                  url: url + '/assets/course/tokyo-turf-2000.jpg',
+                  size: 'full',
+                },
+                body: {
+                  type: 'box',
+                  layout: 'vertical',
+                  contents: [
+                    {
+                      type: 'text',
+                      text: '東京 芝 2000m',
+                      size: 'xl',
+                      weight: 'bold',
+                      wrap: true
+                    },
+                    {
+                      type: 'text',
+                      text: 'クラスが上がるにつれ、スローで流れても逃げ残りが難しくなり差しが決まりやすい。\n 多頭数の場合は外枠不利。',
+                      size: 'sm',
+                      weight: 'bold',
+                      wrap: true
+                    }
+                  ]
+                }
+              },
+              styles: {
+                hero: {
+                  backgroudColor: '#ffffff'
+                }
+              }
+            ]
           }
           message = {
-            type: 'buttons',
-            thumbnailImageUrl: url + '/assets/course/tokyo-turf-2000.jpeg',
-            title: '東京 芝 2000m',
-            text: '差しが決まりやすく、外枠不利'
+            type: 'flex',
+            altText: '各競馬場コース情報を表示'
+            contents: contents
           }
           end
           response = client.reply_message(event['replyToken'], message)
