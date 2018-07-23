@@ -56,7 +56,6 @@ class WebhookController < ApplicationController
           end
           response = client.reply_message(event['replyToken'], message)
           puts response
-          end
         end
       end
     end
