@@ -98,7 +98,7 @@ class WebhookController < ApplicationController
             altText: '各競馬場コース情報を表示',
             contents: contents
           }
-          end
+          # end
           response = client.reply_message(event['replyToken'], message)
           puts response
         end
