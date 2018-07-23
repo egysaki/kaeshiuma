@@ -82,13 +82,13 @@ class WebhookController < ApplicationController
                       wrap: true
                     }
                   ]
+                },
+                styles: {
+                  hero: {
+                    backgroudColor: '#ffffff'
+                  }
                 }
               },
-              styles: {
-                hero: {
-                  backgroudColor: '#ffffff'
-                }
-              }
             ]
           }
           message = {
