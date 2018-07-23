@@ -40,57 +40,59 @@ class WebhookController < ApplicationController
       when Line::Bot::Event::Message
         case event.type
         when Line::Bot::Event::MessageType::Text
-          message = {
-            type: 'text',
-            text: event.message['text']
-          }
+         #おうむ返し
+         # message = {
+         #   type: 'text',
+         #   text: event.message['text']
+         # }
 
           url = root_url(only_path: false)
-          case event.message['text']
-          when '東京芝'
+         # case event.message['text']
+         # when '東京芝'
          # message = {
          #   type: 'image',
          #   originalContentUrl: url + '/assets/course/tokyo-turf-2000.jpg',
          #   previewImageUrl: url + '/assets/course/tokyo-turf-2000.jpg'
          # }
-          contents = {
-            type: 'carousel',
-            contents: [
-              {
-                type: 'bubble',
-                hero: {
-                  type: 'image',
-                  url: url + '/assets/course/tokyo-turf-2000.jpg',
-                  size: 'full',
-                },
-                body: {
-                  type: 'box',
-                  layout: 'vertical',
-                  contents: [
-                    {
-                      type: 'text',
-                      text: '東京 芝 2000m',
-                      size: 'xl',
-                      weight: 'bold',
-                      wrap: true
-                    },
-                    {
-                      type: 'text',
-                      text: 'クラスが上がるにつれ、スローで流れても逃げ残りが難しくなり差しが決まりやすい。\n 多頭数の場合は外枠不利。',
-                      size: 'sm',
-                      weight: 'bold',
-                      wrap: true
-                    }
-                  ]
-                },
-                styles: {
-                  hero: {
-                    backgroudColor: '#ffffff'
-                  }
-                }
-              },
-            ]
-          }
+         # contents = {
+         #   type: 'carousel',
+         #   contents: [
+         #     {
+         #       type: 'bubble',
+         #       hero: {
+         #         type: 'image',
+         #         url: url + '/assets/course/tokyo-turf-2000.jpg',
+         #         size: 'full',
+         #       },
+         #       body: {
+         #         type: 'box',
+         #         layout: 'vertical',
+         #         contents: [
+         #           {
+         #             type: 'text',
+         #             text: '東京 芝 2000m',
+         #             size: 'xl',
+         #             weight: 'bold',
+         #             wrap: true
+         #           },
+         #           {
+         #             type: 'text',
+         #             text: 'クラスが上がるにつれ、スローで流れても逃げ残りが難しくなり差しが決まりやすい。\n 多頭数の場合は外枠不利。',
+         #             size: 'sm',
+         #             weight: 'bold',
+         #             wrap: true
+         #           }
+         #         ]
+         #       },
+         #       styles: {
+         #         hero: {
+         #           backgroudColor: '#ffffff'
+         #         }
+         #       }
+         #     },
+         #   ]
+         # }
+          contents = Api::CourseInfo.return_course_info(event.message['text'], url)
           message = {
             type: 'flex',
             altText: '各競馬場コース情報を表示',
