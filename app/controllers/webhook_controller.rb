@@ -27,9 +27,9 @@ class WebhookController < ApplicationController
   #Lineからのcallbackか認証
   protect_from_forgery with: :null_session
 
-  CHANNEL_SECRET = '066a0e3810610a05f319b2a4b9537d7f'
-  OUTBOUND_PROXY = 'http://fixie:VIyppzCnwQLL4wF@velodrome.usefixie.com:80'
-  CHANNEL_ACCESS_TOKEN = 'cAGZX+n1ST0Bcz0SJ3LCXjDIgoOaM73lG5kdEE9k8ZIU2ZOtsmAKm8BEiHiFPo2KWosC8tkSvzSv2VvJ3UZJ0R9tTI1wkf0l66WFiEYF78Kb7/aX5+VP9sV8RGz0MP7WVG3YJhxjMk9jJ/8F7Vm2/wdB04t89/1O/w1cDnyilFU='
+  #CHANNEL_SECRET = '066a0e3810610a05f319b2a4b9537d7f'
+  #OUTBOUND_PROXY = 'http://fixie:VIyppzCnwQLL4wF@velodrome.usefixie.com:80'
+  #CHANNEL_ACCESS_TOKEN = 'cAGZX+n1ST0Bcz0SJ3LCXjDIgoOaM73lG5kdEE9k8ZIU2ZOtsmAKm8BEiHiFPo2KWosC8tkSvzSv2VvJ3UZJ0R9tTI1wkf0l66WFiEYF78Kb7/aX5+VP9sV8RGz0MP7WVG3YJhxjMk9jJ/8F7Vm2/wdB04t89/1O/w1cDnyilFU='
 
   def callback
     unless is_validate_signature
@@ -38,7 +38,7 @@ class WebhookController < ApplicationController
 
     event = params["events"][0]
     event_type = event["type"]
-    replyToken = event["replyToken"]
+    reply_token = event["replyToken"]
 
     case event_type
     when "message"
@@ -46,8 +46,9 @@ class WebhookController < ApplicationController
       output_text = input_text
     end
 
-    client = LineClient.new(CHANNEL_ACCESS_TOKEN, OUTBOUND_PROXY)
-    res = client.reply(replyToken, output_text)
+    #client = LineClient.new(CHANNEL_ACCESS_TOKEN, OUTBOUND_PROXY)
+    client = LineClient.new
+    res = client.reply(reply_token, output_text)
 
     if res.status == 200
       logger.info({success: res})
