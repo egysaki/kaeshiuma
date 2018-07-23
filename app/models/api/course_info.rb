@@ -1,11 +1,9 @@
 module Api
   class CourseInfo
 
-    TOKYO_TURF = [1400, 1600, 1800, 2000, 2300, 2400, 2500, 3400]
-
     def self.return_course_info(course, url)
       self.course_defined(course)
-      return if @info.blank?
+      return if @info.nil?
 
       contents_body = []
       @info.each do |distance, detail|
@@ -48,7 +46,7 @@ module Api
          #     type: 'bubble',
          #     hero: {
          #       type: 'image',
-         #       url: url + @image_path + disatance.to_s + '.jpg',
+         #       url: url + @image_path + distance.to_s + '.jpg',
          #       size: 'full'
          #     },
          #     body: {
@@ -81,14 +79,14 @@ module Api
       @info = nil
       @image_path = '/assets/course/'
       if course =~ /^東京芝$/
-        @info = {'1400': nil,
-                 '1600': nil,
-                 '1800': nil,
+        @info = {'1400': 'test',
+                 '1600': 'test',
+                 '1800': 'test',
                  '2000': 'クラスが上がるにつれ、スローで流れても逃げ残りが難しくなり差しが決まりやすくなる。\n 多頭数の場合は外枠不利。',
-                 '2300': nil,
-                 '2400': nil,
-                 '2500': nil,
-                 '3400': nil
+                 '2300': 'test',
+                 '2400': 'test',
+                 '2500': 'test',
+                 '3400': 'test'
                 }
         @image_path = @image_path + 'tokyo-turf-'
       end
