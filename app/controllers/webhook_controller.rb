@@ -53,6 +53,12 @@ class WebhookController < ApplicationController
             originalContentUrl: url + '/assets/course/tokyo-turf-2000.jpeg',
             previewImageUrl: url + '/assets/course/tokyo-turf-2000.jpeg'
           }
+          message = {
+            type: 'buttons',
+            thumbnailImageUrl: url + '/assets/course/tokyo-turf-2000.jpeg',
+            title: '東京 芝 2000m',
+            text: '差しが決まりやすく、外枠不利'
+          }
           end
           response = client.reply_message(event['replyToken'], message)
           puts response
