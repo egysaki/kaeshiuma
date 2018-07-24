@@ -20,7 +20,13 @@ module Api
             contents: [
               {
                 type: 'text',
-                text: "#{@name} #{distance.to_s}m",
+                if distance.include?('in')
+                  text: "#{@name} #{distance.to_s.split(/-/)[0]}m 内回り",
+                elsif distance.include?('out')
+                  text: "#{@name} #{distance.to_s.split(/-/)[0]}m 外回り",
+                else
+                  text: "#{@name} #{distance.to_s}m",
+                end
                 size: 'xl',
                 weight: 'bold',
                 wrap: true
@@ -75,6 +81,19 @@ module Api
                 }
         @image_path = @image_path + 'sapporo-dirt-'
         @name = '札幌 ダート'
+      elsif course =~ /^新潟芝$/
+        @info = {'1000': "直線のみのコースだが、穏やかな坂が存在する。残り4ハロン時点で半数以上が脱落し、5ハロン目は残った馬による粘り合いになる。 \n 芝の傷みから開催後半は外枠が有利となる。追い込みは決まりにくいが中団からなら十分差し届く。",
+                 '1200': "test",
+                 '1400': "test",
+                 '1600': "test",
+                 '1800': "test",
+                 '2000-in': "test",
+                 '2000-out': "test",
+                 '2200': "test",
+                 '2400': "test"
+                }
+        @image_path = @image_path + 'niigata-turf-'
+        @name = '新潟 芝'
       end
     end
 
