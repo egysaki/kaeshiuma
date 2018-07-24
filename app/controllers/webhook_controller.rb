@@ -45,7 +45,7 @@ class WebhookController < ApplicationController
           if contents
             message = {
               type: 'flex',
-              altText: '各競馬場コース情報を表示',
+              altText: '競馬場コース特徴を表示',
               contents: contents
             }
           else
