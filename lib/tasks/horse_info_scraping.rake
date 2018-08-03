@@ -87,11 +87,11 @@ task horse_info_scraping: :environment do
     #基本データ3
     blood_table = node.search("table[@class='blood_table']")
     father = blood_table.search("tr[1]/td[1]/a").inner_text
-    father_id = Horse.find_by(name: father).id
+    father_id = Horse.find_by(name: father).id if Horse.find_by(name: father)
     mother = blood_table.search("tr[3]/td[1]/a").inner_text
-    mother_id = Horse.find_by(name: mother).id
+    mother_id = Horse.find_by(name: mother).id if Horse.find_by(name: mother)
     g_father = blood_table.search("tr[3]/td[2]/a").inner_text
-    g_father_id = Horse.find_by(name: g_father).id
+    g_father_id = Horse.find_by(name: g_father).id if Horse.find_by(name: g_father)
   
     p list = name, active_status, sex, age, hair_color_type, birth_day, trainer, owner, producer, father, mother, g_father, link
   
