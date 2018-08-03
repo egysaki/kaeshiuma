@@ -10,14 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180706082647) do
+ActiveRecord::Schema.define(version: 20180803054410) do
 
   create_table "horses", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name", null: false
     t.string "sex", null: false
     t.integer "age", null: false
-    t.integer "active_status", null: false
-    t.integer "hair_color_type", null: false
+    t.string "active_status", null: false
+    t.string "hair_color_type", null: false
     t.date "birth_day", null: false
     t.integer "trainer_id"
     t.integer "owner_id"
@@ -26,6 +26,9 @@ ActiveRecord::Schema.define(version: 20180706082647) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "link", null: false
+    t.integer "father_id"
+    t.integer "mother_id"
+    t.integer "g_father_id"
   end
 
 end

@@ -1,14 +1,15 @@
-task horse_info_scraping: :environment do
+task old_horse_info_scraping: :environment do
   agent = Mechanize.new
   
   uri = 'http://db.netkeiba.com/?pid=horse_search_detail'
   page = agent.get(uri)
   form = page.forms[1]
-  form.under_age = 3
-  form.over_age = 3
+  form.under_age = ""
+  form.over_age = ""
   form.sort = 'prize'
   form.list = 100
-  form.checkbox_with(name: 'act').check
+  form.checkbox_with(name: 'retired').check
+  form.checkbox_with(text: '1勝以上').check
   search_result_page = agent.submit(form)
   
   horse_links = {}
@@ -17,8 +18,7 @@ task horse_info_scraping: :environment do
   total = total.split(/中/)[0].strip.chop.gsub(/\,/, '').to_i
   
   count = 0
-  #while total >= count do
-  while 10 >= count do
+  while total >= count do
   
     table = search_result_page.search("table[@class='nk_tb_common race_table_01'] td").each do |node|
       node.search("a").each do |a|
@@ -58,6 +58,12 @@ task horse_info_scraping: :environment do
       name = origin_name.split(/外/)[1].split(/[[:blank:]]/)[0]
     elsif name.include?("地")
       name = origin_name.split(/地/)[1].split(/[[:blank:]]/)[0]
+    elsif name.include?("市")
+      name = origin_name.split(/市/)[1].split(/[[:blank:]]/)[0]
+    elsif name.include?("父")
+      name = origin_name.split(/父/)[1].split(/[[:blank:]]/)[0]
+    elsif name.include?("母")
+      name = origin_name.split(/母/)[1].split(/[[:blank:]]/)[0]
     end
     name = name.split(/[[:blank:]]/)[0]
 
@@ -65,10 +71,10 @@ task horse_info_scraping: :environment do
 
     status = horse_title.search("p[@class='txt_01']").inner_text.split(/[[:blank:]]/)
     active_status = status[0]
-    active_status = '現役' unless active_status = status[0]
+    active_status = '抹消' unless active_status = status[0]
     sex = status[1][0]
     age = status[1].slice(/\d+/)
-    age = 3 unless age
+    age = 0 unless age
     hair_color_type = status[2]
   
     #基本データ2
@@ -87,11 +93,11 @@ task horse_info_scraping: :environment do
     #基本データ3
     blood_table = node.search("table[@class='blood_table']")
     father = blood_table.search("tr[1]/td[1]/a").inner_text
-    father_id = Horse.find_by(name: father).id
+    father_id = Horse.find_by(name: father).id if Horse.find_by(name: father)
     mother = blood_table.search("tr[3]/td[1]/a").inner_text
-    mother_id = Horse.find_by(name: mother).id
+    mother_id = Horse.find_by(name: mother).id if Horse.find_by(name: mother)
     g_father = blood_table.search("tr[3]/td[2]/a").inner_text
-    g_father_id = Horse.find_by(name: g_father).id
+    g_father_id = Horse.find_by(name: g_father).id if Horse.find_by(name: g_father)
   
     p list = name, active_status, sex, age, hair_color_type, birth_day, trainer, owner, producer, father, mother, g_father, link
   
@@ -106,7 +112,11 @@ task horse_info_scraping: :environment do
     horse.mother_id = mother_id
     horse.g_father_id = g_father_id
     
-    horse.save!
+    begin
+      horse.save!
+    rescue => e
+      next
+    end
     puts "==#{horse.name}を登録しました=="
 
     sleep 1
