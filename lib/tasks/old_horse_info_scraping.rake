@@ -31,6 +31,9 @@ task old_horse_info_scraping: :environment do
     end
     count += 100
   
+    unless search_result_page.link_with(:text => /次/)
+      break
+    end
     next_page_link = search_result_page.link_with(:text => /次/).text
   
     unless next_page_link.nil?
