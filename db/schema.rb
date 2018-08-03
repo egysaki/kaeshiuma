@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180803071828) do
+ActiveRecord::Schema.define(version: 20180803081607) do
 
   create_table "horse_race_infos", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "horse_id", null: false
@@ -31,18 +31,18 @@ ActiveRecord::Schema.define(version: 20180803071828) do
 
   create_table "horses", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name", null: false
-    t.string "sex", null: false
-    t.integer "age", null: false
-    t.string "active_status", null: false
-    t.string "hair_color_type", null: false
-    t.date "birth_day", null: false
+    t.string "sex"
+    t.integer "age"
+    t.string "active_status"
+    t.string "hair_color_type"
+    t.date "birth_day"
     t.integer "trainer_id"
     t.integer "owner_id"
     t.integer "producer_id"
     t.integer "blood_line_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "link", null: false
+    t.string "link"
     t.integer "father_id"
     t.integer "mother_id"
     t.integer "g_father_id"

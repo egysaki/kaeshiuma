@@ -1,5 +1,7 @@
 task horse_info_scraping: :environment do
   agent = Mechanize.new
+
+  Rails.logger.info "スクレイピングを開始します。"
   
   uri = 'http://db.netkeiba.com/?pid=horse_search_detail'
   page = agent.get(uri)
@@ -17,8 +19,8 @@ task horse_info_scraping: :environment do
   total = total.split(/中/)[0].strip.chop.gsub(/\,/, '').to_i
   
   count = 0
-  #while total >= count do
-  while 10 >= count do
+  while total >= count do
+  #while 10 >= count do
   
     table = search_result_page.search("table[@class='nk_tb_common race_table_01'] td").each do |node|
       node.search("a").each do |a|
@@ -46,6 +48,7 @@ task horse_info_scraping: :environment do
     
   end
 
+  Rails.logger.info " ==競走馬の情報を登録します== "
   puts " ==競走馬の情報を登録します== "
   horse_links.each do |name, link|
     uri = "http://db.netkeiba.com/#{link}"
@@ -90,11 +93,11 @@ task horse_info_scraping: :environment do
     #基本データ3
     blood_table = node.search("table[@class='blood_table']")
     father = blood_table.search("tr[1]/td[1]/a").inner_text
-    father_id = Horse.find_by(name: father).id if Horse.find_by(name: father)
+    father_id = Horse.find_or_create_by(name: father).id
     mother = blood_table.search("tr[3]/td[1]/a").inner_text
-    mother_id = Horse.find_by(name: mother).id if Horse.find_by(name: mother)
+    mother_id = Horse.find_or_create_by(name: mother).id
     g_father = blood_table.search("tr[3]/td[2]/a").inner_text
-    g_father_id = Horse.find_by(name: g_father).id if Horse.find_by(name: g_father)
+    g_father_id = Horse.find_or_create_by(name: g_father).id
   
     p list = name, active_status, sex, age, hair_color_type, birth_day, trainer, owner, producer, father, mother, g_father, link
   
@@ -110,7 +113,13 @@ task horse_info_scraping: :environment do
     horse.g_father_id = g_father_id
     
     horse.save!
-    puts "==#{horse.name}を登録しました=="
+    if horse.new_record?
+      Rails.logger.info "==#{horse.name}を登録しました=="
+      puts "==#{horse.name}を登録しました=="
+    else
+      Rails.logger.info "==#{horse.name}を更新しました=="
+      puts "==#{horse.name}を更新しました=="
+    end
 
     sleep 1
   end
