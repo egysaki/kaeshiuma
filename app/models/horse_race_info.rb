@@ -1,0 +1,2 @@
+class HorseRaceInfo < ApplicationRecord
+end

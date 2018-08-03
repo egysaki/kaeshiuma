@@ -10,7 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180803065619) do
+ActiveRecord::Schema.define(version: 20180803071828) do
+
+  create_table "horse_race_infos", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer "horse_id", null: false
+    t.integer "race_result_id", null: false
+    t.integer "accompishment_time"
+    t.integer "time_for_3f"
+    t.integer "order_of_placing"
+    t.string "passing_info"
+    t.integer "weight"
+    t.integer "basis_weight"
+    t.integer "popularity"
+    t.integer "post_position"
+    t.integer "horse_number"
+    t.integer "margin"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "horses", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name", null: false
@@ -29,6 +46,16 @@ ActiveRecord::Schema.define(version: 20180803065619) do
     t.integer "father_id"
     t.integer "mother_id"
     t.integer "g_father_id"
+  end
+
+  create_table "race_results", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
+    t.integer "race_id", null: false
+    t.string "corse_status"
+    t.date "event_date"
+    t.integer "times"
+    t.integer "race_round"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "races", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
