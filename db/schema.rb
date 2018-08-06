@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180806040629) do
+ActiveRecord::Schema.define(version: 20180806064633) do
 
   create_table "courses", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name", null: false
@@ -21,18 +21,21 @@ ActiveRecord::Schema.define(version: 20180806040629) do
   create_table "horse_race_infos", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "horse_id", null: false
     t.integer "race_result_id", null: false
-    t.integer "accompishment_time"
-    t.integer "time_for_3f"
+    t.float "accomplishment_time", limit: 24
+    t.float "time_for_3f", limit: 24
     t.integer "order_of_placing"
     t.string "passing_info"
     t.integer "weight"
-    t.integer "basis_weight"
+    t.float "basis_weight", limit: 24
     t.integer "popularity"
     t.integer "post_position"
     t.integer "horse_number"
     t.integer "margin"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.float "odds", limit: 24
+    t.string "pace"
+    t.string "weight_difference"
   end
 
   create_table "horses", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -56,19 +59,20 @@ ActiveRecord::Schema.define(version: 20180806040629) do
 
   create_table "race_results", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "race_id", null: false
-    t.string "corse_status"
+    t.string "course_status"
     t.date "event_date"
     t.integer "times"
     t.integer "race_round"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "weather"
   end
 
   create_table "races", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name", null: false
     t.integer "distance", null: false
     t.integer "course_id", null: false
-    t.string "grade", null: false
+    t.string "grade"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
