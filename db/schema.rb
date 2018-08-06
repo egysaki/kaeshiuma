@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180806064633) do
+ActiveRecord::Schema.define(version: 20180806085757) do
 
   create_table "courses", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name", null: false
@@ -21,7 +21,7 @@ ActiveRecord::Schema.define(version: 20180806064633) do
   create_table "horse_race_infos", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.integer "horse_id", null: false
     t.integer "race_result_id", null: false
-    t.float "accomplishment_time", limit: 24
+    t.string "accomplishment_time"
     t.float "time_for_3f", limit: 24
     t.integer "order_of_placing"
     t.string "passing_info"
@@ -30,7 +30,7 @@ ActiveRecord::Schema.define(version: 20180806064633) do
     t.integer "popularity"
     t.integer "post_position"
     t.integer "horse_number"
-    t.integer "margin"
+    t.float "margin", limit: 24
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.float "odds", limit: 24
@@ -75,6 +75,7 @@ ActiveRecord::Schema.define(version: 20180806064633) do
     t.string "grade"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "course_type"
   end
 
 end

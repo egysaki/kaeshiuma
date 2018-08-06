@@ -53,14 +53,17 @@ task horse_race_info_scraping: :environment do
           else
             grade = nil
           end
-          race = Race.find_or_create_by(name: race_name, distance: distance, course_id: course.id, grade: grade)
+
+          course_type = distance.gsub(/\d+/, '')
+          distance = distance.gsub(/芝|ダート/, '')
+          race = Race.find_or_create_by(name: race_name, distance: distance.to_i, course_id: course.id, grade: grade, course_type: course_type)
 
           race_round = course_info.slice(/\d+$/)
           race_result = RaceResult.find_or_create_by(race_id: race.id, course_status: course_status, event_date: event_date, race_round: race_round, weather: weather)
 
           weight = weight_info.split(/\(/)[0].to_i
           weight_difference = weight_info.split(/\(/)[1].gsub(/\)/, '')
-          horse_race_info = HorseRaceInfo.find_or_create_by(horse_id: horse.id, race_result_id: race_result.id, accomplishment_time: accomplishment_time, time_for_3f: time_for_3f, order_of_placing: order_of_placing, passing_info: passing_info, weight: weight, basis_weight: basis_weight, popularity: popularity, post_position: post_position, horse_number: horse_number, margin: margin, odds: odds, weight_difference: weight_difference, pace: pace)
+          horse_race_info = HorseRaceInfo.find_or_create_by(horse_id: horse.id, race_result_id: race_result.id, accomplishment_time: accomplishment_time, time_for_3f: time_for_3f, order_of_placing: order_of_placing, passing_info: passing_info, weight: weight, basis_weight: basis_weight, popularity: popularity, post_position: post_position, horse_number: horse_number, margin: margin.to_i, odds: odds, weight_difference: weight_difference, pace: pace)
         rescue => e
           Rails.logger.info e
           p e
