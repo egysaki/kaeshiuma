@@ -51,6 +51,7 @@ task horse_info_scraping: :environment do
   Rails.logger.info " ==競走馬の情報を登録します== "
   puts " ==競走馬の情報を登録します== "
   horse_links.each do |name, link|
+    next if Horse.where(name: name).present?
     begin
       uri = "http://db.netkeiba.com/#{link}"
       page = agent.get(uri)
