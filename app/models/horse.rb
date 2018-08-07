@@ -1,6 +1,6 @@
 class Horse < ApplicationRecord
 
-  has_many :horse_race_infos
+  has_many :horse_race_results
 
   def father
     Horse.find(father_id)
@@ -23,12 +23,12 @@ class Horse < ApplicationRecord
   end
 
   def winning_races
-    self.horse_race_infos.where(order_of_placing: 1)
+    self.horse_race_results.where(order_of_placing: 1)
   end
 
   def titles
-    self.winning_races.map do |race_info|
-      race_info.race_result.race.name
+    self.winning_races.map do |race_result|
+      race_result.race_info.race.name
     end
   end
 

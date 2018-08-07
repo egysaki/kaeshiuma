@@ -19,8 +19,8 @@ task horse_info_scraping: :environment do
   total = total.split(/中/)[0].strip.chop.gsub(/\,/, '').to_i
   
   count = 0
-  while total >= count do
-  #while 10 >= count do
+  #while total >= count do
+  while 10 >= count do
   
     table = search_result_page.search("table[@class='nk_tb_common race_table_01'] td").each do |node|
       node.search("a").each do |a|

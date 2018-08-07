@@ -1,7 +1,7 @@
 class Race < ApplicationRecord
   belongs_to :course
 
-  has_many :race_results
+  has_many :race_infos
 
   def self.g1_races
     Race.where(grade: 'g1')
