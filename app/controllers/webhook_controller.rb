@@ -41,18 +41,41 @@ class WebhookController < ApplicationController
         case event.type
         when Line::Bot::Event::MessageType::Text
           url = root_url(only_path: false)
-          contents = Api::CourseInfo.return_course_info(event.message['text'], url)
-          if contents
-            message = {
-              type: 'flex',
-              altText: '競馬場コース特徴を表示',
-              contents: contents
-            }
+          if event.message['text'] =~ /芝$|ダート$/
+            contents = Api::CourseInfo.return_course_info(event.message['text'], url)
+            if contents
+              message = {
+                type: 'flex',
+                altText: '競馬場コース特徴を表示',
+                contents: contents
+              }
+            else
+              message = {
+                type: 'text',
+                text: '該当するコースが見つかりませんでした。'
+              }
+            end
+          elsif Horse.find_by(name: event.message['text'])
+            horse = Horse.find_by(name: event.message['text'])
+            limit = event.message['text'].slice(/\w+/).to_i
+            contents = Api::HorseInfo.return_horse_info(horse, limit)
+            if contents
+              message = {
+                type: 'flex',
+                altText: '競走馬の情報を表示',
+                contents: contents
+              }
+            else
+              message = {
+                type: 'text',
+                text: '該当する競走馬が見つかりませんでした。'
+              }
+            end
           else
-          message = {
-            type: 'text',
-            text: '未対応のコマンドです。'
-          }
+            message = {
+              type: 'text',
+              text: '未対応のコマンドです。'
+            }
           end
           response = client.reply_message(event['replyToken'], message)
           puts response
