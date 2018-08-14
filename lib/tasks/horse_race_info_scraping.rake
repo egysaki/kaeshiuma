@@ -5,6 +5,7 @@ task horse_race_info_scraping: :environment do
   
   horses = Horse.where(age: 3)
   horses.each do |horse|
+      puts horse.name
       uri = "http://db.netkeiba.com/#{horse.link}"
       page = agent.get(uri)
       node = page.search("table[@class='db_h_race_results nk_tb_common']")
@@ -29,22 +30,39 @@ task horse_race_info_scraping: :environment do
           order_of_placing = text[10]
           jokey_name = text[11]
           basis_weight = text[12]
-          distance = text[13]
+          distance_info = text[13]
           course_status = text[14]
           # 指数
           accomplishment_time = text[15]
           margin = text[16]
+          if course_info.include?('新潟') && distance_info.include?('1000')
           # タイム指数
-          passing_info = text[17]
-          pace = text[18]
-          time_for_3f = text[19]
-          weight_info = text[20]
-          # 厩舎コメント
-          # 備考
-          winner_horse = text[21]
-          prize = text[22]
+            passing_info = nil
+            pace = text[17]
+            time_for_3f = text[18]
+            weight_info = text[19]
+            # 厩舎コメント
+            # 備考
+            winner_horse = text[20]
+            prize = text[21]
+          else
+          # タイム指数
+            passing_info = text[17]
+            pace = text[18]
+            time_for_3f = text[19]
+            weight_info = text[20]
+            # 厩舎コメント
+            # 備考
+            winner_horse = text[21]
+            prize = text[22]
+          end
 
-          course = Course.find_by(name: course_info.gsub(/\d+/, ''))
+          unless course_info =~ /^\d+.*\d+$/
+            next
+            #course = Course.find_or_create_by(name: course_info)
+          else
+            course = Course.find_or_create_by(name: course_info.gsub(/\d+/, ''))
+          end
           if race_name =~ (/\(.*\)/)
             grade = race_name.split(/\(/)[1].gsub(/\)/, '')
             race_name = race_name.split(/\(/)[0]
@@ -54,8 +72,8 @@ task horse_race_info_scraping: :environment do
             grade = nil
           end
 
-          course_type = distance.gsub(/\d+/, '')
-          distance = distance.gsub(/芝|ダート/, '')
+          course_type = distance_info.gsub(/\d+/, '')
+          distance = distance_info.gsub(/芝|ダ/, '')
           race = Race.find_or_create_by(name: race_name, distance: distance.to_i, course_id: course.id, grade: grade, course_type: course_type)
 
           race_round = course_info.slice(/\d+$/)
@@ -70,7 +88,6 @@ task horse_race_info_scraping: :environment do
           next
         end
       end
-      break
     
     sleep 1
   end
