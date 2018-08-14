@@ -55,7 +55,7 @@ class WebhookController < ApplicationController
                 text: '該当するコースが見つかりませんでした。'
               }
             end
-          elsif Horse.find_by(name: event.message['text'])
+          elsif Horse.find_by(name: event.message['text'].gsub(/\d+| /, ''))
             horse = Horse.find_by(name: event.message['text'])
             limit = event.message['text'].slice(/\w+/).to_i
             contents = Api::HorseInfo.return_horse_info(horse, limit)
