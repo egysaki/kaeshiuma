@@ -20,12 +20,6 @@ module Api
             }
           ]
         },
-        hero: {
-          type: 'image',
-          url: url + horse.src_path,
-          size: 'full',
-          aspectMode: 'cover'
-        },
         body: {
           type: 'box',
           layout: 'vertical',
