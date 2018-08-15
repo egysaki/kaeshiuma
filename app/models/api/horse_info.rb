@@ -2,7 +2,6 @@ module Api
   class HorseInfo
 
     def self.return_horse_info(horse, url, limit = 5)
-      puts url + horse.src_path
       contents_body = []
       contents_body << {
         type: 'bubble',
@@ -59,7 +58,6 @@ module Api
       }
 
       horse.horse_race_results.joins(:race_info).order("race_infos.event_date desc").limit(limit).each do |result|
-        puts url + "/assets/order_of_placing/order_of_placing-#{result.order_of_placing}.jpg"
         contents_body << {
           type: 'bubble',
           header: {
@@ -88,7 +86,7 @@ module Api
                 contents: [
                   {
                     type: 'image',
-                    url: url + "/assets/order_of_placing/order_of_placing-#{result.order_of_placing}.jpg",
+                    url: self.order_place_img(url, result),
                     aspectRatio: '1:1',
                     margin: "lg",
                     size: 'lg'
@@ -163,6 +161,10 @@ module Api
         type: 'carousel',
         contents: contents_body
       }
+    end
+
+    def self.order_place_img(url, result)
+      url + "/assets/order_of_placing/order_of_placing-#{result.order_of_placing}.jpg"
     end
 
     def self.grade_color(grade)
