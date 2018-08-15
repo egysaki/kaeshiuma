@@ -5,6 +5,7 @@ task get_horse_image: :environment do
   
   horses = Horse.where.not(link: nil)
   horses.each do |horse|
+    begin
       puts horse.name
       uri = "http://db.netkeiba.com/#{horse.link}"
       page = agent.get(uri)
@@ -20,6 +21,9 @@ task get_horse_image: :environment do
       horse.save!
 
       puts "#{horse.name}の画像を保存しました。"
+    rescue => e
+      puts e
+    end
 
     sleep 1
   end
