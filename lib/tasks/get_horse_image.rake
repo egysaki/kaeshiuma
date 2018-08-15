@@ -14,7 +14,7 @@ task get_horse_image: :environment do
       if photo
         src = node.search("//*[@id='HorseMainPhoto']").at('img')['src']
         src_path = "/assets/images/horse/horse-#{horse.id}.jpg"
-        agent.get(src).save_as("./app" + src_path)
+      p  agent.get(src).save_as("./app" + src_path)
       end
       horse.src_path = src_path
       horse.save!
