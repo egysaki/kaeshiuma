@@ -151,7 +151,7 @@ module Api
           },
           styles: {
             header: {
-              backgroudColor: grade_color(result.race_info.race.grade)
+              backgroudColor: self.grade_color(result.race_info.race.grade)
             }
           }
         }
@@ -163,9 +163,7 @@ module Api
       }
     end
 
-    private
-
-    def grade_color(grade)
+    def self.grade_color(grade)
       case grade
       when 'G1'
         '#000066'
