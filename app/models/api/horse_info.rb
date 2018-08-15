@@ -1,10 +1,7 @@
 module Api
   class HorseInfo
 
-    def self.return_horse_info(horse, limit)
-      self.course_defined(course)
-      return if @info.nil?
-
+    def self.return_horse_info(horse, limit = 5)
       contents_body = []
       contents_body << {
         type: 'bubble',
