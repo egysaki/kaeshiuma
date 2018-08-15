@@ -3,7 +3,7 @@ task horse_race_info_scraping: :environment do
 
   Rails.logger.info "スクレイピングを開始します。"
   
-  horses = Horse.all
+  horses = Horse.where.not(link: nil)
   horses.each do |horse|
       puts horse.name
       uri = "http://db.netkeiba.com/#{horse.link}"
@@ -88,7 +88,7 @@ task horse_race_info_scraping: :environment do
 
         rescue => e
           Rails.logger.info e
-          p e
+          puts e
           next
         end
       end
