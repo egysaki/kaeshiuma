@@ -87,7 +87,7 @@ module Api
               },
               {
                 type: 'text',
-                text: "#{result.race_info.race.course_type}#{result.race_info.distance}m #{result.accomplishment_time} #{result.race_info.course_status}",
+                text: "#{result.race_info.race.course_type}#{result.race_info.race.distance}m #{result.accomplishment_time} #{result.race_info.course_status}",
                 size: 'sm',
                 weight: 'bold',
                 wrap: true
