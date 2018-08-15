@@ -94,7 +94,7 @@ module Api
               },
               {
                 type: 'text',
-                text: "#{result.post_position}枠#{result.horse_number}番#{result.popularity}人 #{horse.odds}倍",
+                text: "#{result.post_position}枠#{result.horse_number}番#{result.popularity}人 #{result.odds}倍",
                 size: 'sm',
                 weight: 'bold',
                 wrap: true
