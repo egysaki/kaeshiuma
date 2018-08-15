@@ -2,6 +2,7 @@ module Api
   class HorseInfo
 
     def self.return_horse_info(horse, url, limit = 5)
+      puts url + horse.src_path
       contents_body = []
       contents_body << {
         type: 'bubble',
@@ -58,6 +59,7 @@ module Api
       }
 
       horse.horse_race_results.joins(:race_info).order("race_infos.event_date desc").limit(limit).each do |result|
+        puts url + "/assets/order_of_placing/order_of_placing-#{result.order_of_placing}.jpg"
         contents_body << {
           type: 'bubble',
           header: {
