@@ -13,7 +13,7 @@ module Api
               type: 'text',
               text: "#{horse.name} #{horse.sex}#{horse.age}歳",
               size: 'xl',
-              color: '#ffffff'
+              color: '#ffffff',
               weight: 'bold',
               wrap: true
             }
@@ -89,7 +89,7 @@ module Api
                     url: url + "/assets/order_of_placing/order_of_placing-#{result.order_of_placing}.jpg",
                     aspectRatio: '1:1',
                     margin: "lg",
-                    size: 'lg',
+                    size: 'lg'
                   }
                 ]
               },
