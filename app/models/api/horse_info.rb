@@ -76,7 +76,7 @@ module Api
             contents: [
               {
                 type: 'text',
-                text: "#{result.order_of_placing}着 jockey #{result.basis_weight}",
+                text: "#{result.order_of_placing}着 #{result.jokey.name}(#{result.basis_weight})",
                 size: 'md',
                 weight: 'bold',
                 wrap: true
