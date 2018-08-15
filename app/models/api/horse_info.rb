@@ -20,6 +20,12 @@ module Api
             }
           ]
         },
+        hero: {
+          type: 'image',
+          url: url + horse.src_path,
+          size: 'full',
+          aspectMode: 'cover'
+        },
         body: {
           type: 'box',
           layout: 'vertical',
@@ -47,7 +53,7 @@ module Api
         },
         styles: {
           header: {
-            backgroudColor: '#006400'
+            backgroundColor: '#006400'
           }
         }
       }
@@ -147,7 +153,7 @@ module Api
           },
           styles: {
             header: {
-              backgroudColor: self.grade_color(result.race_info.race.grade)
+              backgroundColor: self.grade_color(result.race_info.race.grade)
             }
           }
         }
