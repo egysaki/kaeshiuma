@@ -1,5 +1,6 @@
 <h1>Kaeshiuma</h1>
 
-<%= link_to '画像1', '/assets/course/tokyo-dirt-1300.png' %>
+<%= link_to '画像1', '/assets/course/tokyo-dirt-1300.jpg' %>
 
-<%= link_to Horse.last.name, Horse.last.src_path %>
+<% horse = Horse.first %>
+<%= link_to horse.name, horse.src_path %>

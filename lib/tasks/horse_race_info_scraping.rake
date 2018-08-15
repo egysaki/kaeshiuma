@@ -3,7 +3,7 @@ task horse_race_info_scraping: :environment do
 
   Rails.logger.info "スクレイピングを開始します。"
   
-  horses = Horse.where(age: 3)
+  horses = Horse.all
   horses.each do |horse|
       puts horse.name
       uri = "http://db.netkeiba.com/#{horse.link}"
