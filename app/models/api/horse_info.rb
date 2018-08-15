@@ -80,7 +80,7 @@ module Api
               },
               {
                 type: 'text',
-                text: "#{result.rece_info.event_date.strftime('%Y/%m/%d')} #{result.race_info.race.course.name}#{result.race_info.race_round}R",
+                text: "#{result.race_info.event_date.strftime('%Y/%m/%d')} #{result.race_info.race.course.name}#{result.race_info.race_round}R",
                 size: 'sm',
                 weight: 'bold',
                 wrap: true

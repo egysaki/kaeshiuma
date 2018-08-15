@@ -6,8 +6,10 @@ task horse_info_scraping: :environment do
   uri = 'http://db.netkeiba.com/?pid=horse_search_detail'
   page = agent.get(uri)
   form = page.forms[1]
-  form.under_age = 3
-  form.over_age = 3
+  form.under_age = 2
+  #form.over_age = 3
+  #form.under_age = 'none'
+  form.over_age = 'none'
   form.sort = 'prize'
   form.list = 100
   form.checkbox_with(name: 'act').check
@@ -20,7 +22,8 @@ task horse_info_scraping: :environment do
   
   count = 0
   #while total >= count do
-  while 10 >= count do
+  while 3000 >= count do
+  #while 10 >= count do
   
     table = search_result_page.search("table[@class='nk_tb_common race_table_01'] td").each do |node|
       node.search("a").each do |a|
@@ -51,14 +54,14 @@ task horse_info_scraping: :environment do
   Rails.logger.info " ==競走馬の情報を登録します== "
   puts " ==競走馬の情報を登録します== "
   horse_links.each do |name, link|
-    next if Horse.where(name: name).present?
+    next if Horse.find_by(name: name).present? && Horse.find_by(name: name).src_path.present?
     begin
-      uri = "http://db.netkeiba.com/#{link}"
+      uri = "http://db.netkeiba.com#{link}"
       page = agent.get(uri)
       node = page.search("div[@id='contents']")
     
       db_main_box = node.search("div[@id='db_main_box']")
-    
+
       horse_title = node.search("div[@class='horse_title']")
       name = horse_title.inner_text.strip
       origin_name = name
@@ -76,7 +79,7 @@ task horse_info_scraping: :environment do
       active_status = '現役' unless active_status = status[0]
       sex = status[1][0]
       age = status[1].slice(/\d+/)
-      age = 3 unless age
+      #age = 3 unless age
       hair_color_type = status[2]
     
       #基本データ2
@@ -101,7 +104,7 @@ task horse_info_scraping: :environment do
       g_father = blood_table.search("tr[3]/td[2]/a").inner_text
       g_father_id = Horse.find_or_create_by(name: g_father).id
     
-      p list = name, active_status, sex, age, hair_color_type, birth_day, trainer, owner, producer, father, mother, g_father, link
+      #p list = name, active_status, sex, age, hair_color_type, birth_day, trainer, owner, producer, father, mother, g_father, link
     
       horse.name = name
       horse.active_status = active_status
@@ -120,7 +123,17 @@ task horse_info_scraping: :environment do
         message = "==#{horse.name}を更新しました=="
       end
       horse.save!
-      Rails.logger.info message
+
+      photo = node.search("//*[@id='HorseMainPhoto']").at('img')
+      if photo
+        src = node.search("//*[@id='HorseMainPhoto']").at('img')['src']
+        src_path = "/assets/images/horse/horse-#{horse.id}.jpg"
+        agent.get(src).save_as("./app" + src_path)
+      end
+      horse.src_path = src_path
+      horse.save!
+
+      puts message
 
       sleep 1
     rescue => e
