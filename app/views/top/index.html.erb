@@ -4,3 +4,5 @@
 
 <% horse = Horse.first %>
 <%= link_to horse.name, horse.src_path %>
+<%= url = root_url(only_path: false) %>
+<%= url + horse.src_path %>
