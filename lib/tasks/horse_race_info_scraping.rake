@@ -5,6 +5,7 @@ task horse_race_info_scraping: :environment do
   
   horses = Horse.where.not(link: nil)
   horses.each do |horse|
+      next if horse.horse_race_results.exists?
       puts horse.name
       uri = "http://db.netkeiba.com/#{horse.link}"
       page = agent.get(uri)

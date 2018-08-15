@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180815021555) do
+ActiveRecord::Schema.define(version: 20180815074157) do
 
   create_table "courses", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
     t.string "name", null: false
@@ -37,6 +37,9 @@ ActiveRecord::Schema.define(version: 20180815021555) do
     t.string "pace"
     t.string "weight_difference"
     t.integer "jokey_id"
+    t.index ["horse_id"], name: "index_horse_race_results_on_horse_id"
+    t.index ["jokey_id"], name: "index_horse_race_results_on_jokey_id"
+    t.index ["race_info_id"], name: "index_horse_race_results_on_race_info_id"
   end
 
   create_table "horses", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|
@@ -74,6 +77,7 @@ ActiveRecord::Schema.define(version: 20180815021555) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "weather"
+    t.index ["race_id"], name: "index_race_infos_on_race_id"
   end
 
   create_table "races", force: :cascade, options: "ENGINE=InnoDB DEFAULT CHARSET=utf8" do |t|

@@ -14,8 +14,9 @@ task get_horse_image: :environment do
       photo = node.search("//*[@id='HorseMainPhoto']").at('img')
       if photo
         src = node.search("//*[@id='HorseMainPhoto']").at('img')['src']
-        src_path = "/assets/images/horse/horse-#{horse.id}.jpg"
-      p  agent.get(src).save_as("./app" + src_path)
+        save_path = "/assets/images/horse/#{horse.name}.jpg"
+        src_path = "/assets/horse/#{horse.name}.jpg"
+        agent.get(src).save_as("./app" + save_path)
       end
       horse.src_path = src_path
       horse.save!
@@ -28,5 +29,5 @@ task get_horse_image: :environment do
     sleep 1
   end
 
-  system "rm ./app/assets/images/horse/horse*.jpg.*"
+  system "rm ./app/assets/images/horse/*.jpg.*"
 end
