@@ -163,20 +163,20 @@ module Api
       }
     end
 
-  end
+    private
 
-  private
-
-  def grade_color(grade)
-    case grade
-    when 'G1'
-      '#000066'
-    when 'G2'
-      '#cc0000'
-    when 'G3'
-      '#008000'
-    else
-      '#696969'
+    def grade_color(grade)
+      case grade
+      when 'G1'
+        '#000066'
+      when 'G2'
+        '#cc0000'
+      when 'G3'
+        '#008000'
+      else
+        '#696969'
+      end
     end
+
   end
 end
