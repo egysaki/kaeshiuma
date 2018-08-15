@@ -13,6 +13,7 @@
 !/log/.keep
 !/tmp/.keep
 /app/assets/images/horse/*
+!/app/assets/images/horse/.keep
 
 /node_modules
 /yarn-error.log
