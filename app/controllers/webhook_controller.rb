@@ -55,10 +55,14 @@ class WebhookController < ApplicationController
                 text: '該当するコースが見つかりませんでした。'
               }
             end
-          elsif Horse.find_by(name: event.message['text'].gsub(/\d+| /, ''))
-            horse = Horse.find_by(name: event.message['text'].gsub(/\d+| /, ''))
+         # elsif Horse.find_by(name: event.message['text'].gsub(/\d+| /, ''))
+         #   horse = Horse.find_by(name: event.message['text'].gsub(/\d+| /, ''))
+         #   limit = event.message['text'].slice(/\w+/).to_i
+         #   contents = Api::HorseInfo.return_horse_info(horse, url, limit)
+          else
+            horse_name = event.message['text'].gsub(/\d+| /, '')
             limit = event.message['text'].slice(/\w+/).to_i
-            contents = Api::HorseInfo.return_horse_info(horse, url, limit)
+            contents = Api::ActiveHorseInfo.return_horse_info(horse_name, url, limit)
             if contents
               message = {
                 type: 'flex',
@@ -71,11 +75,11 @@ class WebhookController < ApplicationController
                 text: '該当する競走馬が見つかりませんでした。'
               }
             end
-          else
-            message = {
-              type: 'text',
-              text: '未対応のコマンドです。'
-            }
+         # else
+         #   message = {
+         #     type: 'text',
+         #     text: '未対応のコマンドです。'
+         #   }
           end
           response = client.reply_message(event['replyToken'], message)
           puts response
