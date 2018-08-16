@@ -22,7 +22,7 @@ task horse_info_scraping: :environment do
   
   count = 0
   #while total >= count do
-  while 3000 >= count do
+  while 2000 >= count do
   #while 10 >= count do
   
     table = search_result_page.search("table[@class='nk_tb_common race_table_01'] td").each do |node|
@@ -76,7 +76,7 @@ task horse_info_scraping: :environment do
 
       status = horse_title.search("p[@class='txt_01']").inner_text.split(/[[:blank:]]/)
       active_status = status[0]
-      active_status = '現役' unless active_status = status[0]
+      active_status = '現役' unless active_status
       sex = status[1][0]
       age = status[1].slice(/\d+/)
       #age = 3 unless age

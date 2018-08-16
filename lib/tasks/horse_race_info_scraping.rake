@@ -3,7 +3,8 @@ task horse_race_info_scraping: :environment do
 
   Rails.logger.info "スクレイピングを開始します。"
   
-  horses = Horse.where.not(link: nil)
+  #horses = Horse.where.not(link: nil)
+  horses = Horse.where.not(link: nil).limit(100)
   horses.each do |horse|
       next if horse.horse_race_results.exists?
       puts horse.name
