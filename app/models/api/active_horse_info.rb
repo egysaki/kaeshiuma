@@ -172,7 +172,7 @@ module Api
                     size: 'md',
                     weight: 'bold',
                     wrap: true
-                  }
+                  },
                   {
                     type: 'text',
                     text: "勝ち馬: #{result[22]} 着差: #{result[17]})",
