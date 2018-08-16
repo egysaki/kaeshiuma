@@ -127,8 +127,8 @@ task horse_info_scraping: :environment do
       photo = node.search("//*[@id='HorseMainPhoto']").at('img')
       if photo
         src = node.search("//*[@id='HorseMainPhoto']").at('img')['src']
-        save_path = "/assets/images/horse/#{horse.name}.jpg"
-        src_path = "/assets/horse/#{horse.name}.jpg"
+        save_path = "/assets/images#{horse.link}.jpg"
+        src_path = "/assets#{horse.link}.jpg"
         agent.get(src).save_as("./app" + save_path)
       end
       horse.src_path = src_path

@@ -3,7 +3,7 @@ task get_horse_image: :environment do
 
   Rails.logger.info "馬の画像の取得を開始します。"
   
-  horses = Horse.where.not(link: nil)
+  horses = Horse.where.not(src_path: '%horse/2%')
   horses.each do |horse|
     begin
       puts horse.name
@@ -14,8 +14,8 @@ task get_horse_image: :environment do
       photo = node.search("//*[@id='HorseMainPhoto']").at('img')
       if photo
         src = node.search("//*[@id='HorseMainPhoto']").at('img')['src']
-        save_path = "/assets/images/horse/#{horse.name}.jpg"
-        src_path = "/assets/horse/#{horse.name}.jpg"
+        save_path = "/assets/images#{horse.link.chop}.jpg"
+        src_path = "/assets#{horse.link.chop}.jpg"
         agent.get(src).save_as("./app" + save_path)
       end
       horse.src_path = src_path
@@ -29,5 +29,5 @@ task get_horse_image: :environment do
     sleep 1
   end
 
-  system "rm ./app/assets/images/horse/*.jpg.*"
+  #system "rm ./app/assets/images/horse/*.jpg.*"
 end

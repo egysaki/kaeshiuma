@@ -20,7 +20,7 @@ module Api
         },
         hero: {
           type: 'image',
-          url: "https://kaeshiuma.herokuapp.com/assets/order_of_placing/order_of_placing-1.jpg",
+          url: url + horse.src_path,
           size: 'full',
           aspectMode: 'cover'
         },
@@ -62,106 +62,104 @@ module Api
         }
       }
 
-
-
-#      horse.horse_race_results.joins(:race_info).order("race_infos.event_date desc").limit(limit).each do |result|
-#        contents_body << {
-#          type: 'bubble',
-#          header: {
-#            type: 'box',
-#            layout: 'vertical',
-#            contents: [
-#              {
-#                type: 'text',
-#                text: "#{result.race_info.race.name}(#{result.race_info.race.grade})",
-#                size: 'xl',
-#                weight: 'bold',
-#                color: '#ffffff'
-#              }
-#            ]
-#          },
-#          body: {
-#            type: 'box',
-#            layout: 'horizontal',
-#            spacing: 'md',
-#            contents: [
-#              {
-#                type: 'box',
-#                layout: 'vertical',
-#                flex: 1,
-#                contents: [
-#                  {
-#                    type: 'image',
-#                    url: self.order_place_img(url, result),
-#                    aspectRatio: '1:1',
-#                    margin: "lg",
-#                    size: 'lg'
-#                  }
-#                ]
-#              },
-#              {
-#                type: 'box',
-#                layout: 'vertical',
-#                flex: 5,
-#                contents: [
-#                  {
-#                    type: 'text',
-#                    text: "着 #{result.jokey.name}(#{result.basis_weight})",
-#                    size: 'lg',
-#                    weight: 'bold',
-#                    wrap: true
-#                  },
-#                  {
-#                    type: 'separator'
-#                  },
-#                  {
-#                    type: 'text',
-#                    text: "#{result.race_info.event_date.strftime('%Y/%m/%d')} #{result.race_info.race.course.name}#{result.race_info.race_round}R",
-#                    size: 'md',
-#                    weight: 'bold',
-#                    wrap: true
-#                  },
-#                  {
-#                    type: 'separator'
-#                  },
-#                  {
-#                    type: 'text',
-#                    text: "#{result.race_info.race.course_type}#{result.race_info.race.distance}m #{result.accomplishment_time} #{result.race_info.course_status}",
-#                    size: 'md',
-#                    weight: 'bold',
-#                    wrap: true
-#                  },
-#                  {
-#                    type: 'separator'
-#                  },
-#                  {
-#                    type: 'text',
-#                    text: "#{result.post_position}枠#{result.horse_number}番#{result.popularity}人 #{result.odds}倍",
-#                    size: 'md',
-#                    weight: 'bold',
-#                    wrap: true
-#                  },
-#                  {
-#                    type: 'separator'
-#                  },
-#                  {
-#                    type: 'text',
-#                    text: "#{result.passing_info}(#{result.time_for_3f}) #{result.weight}(#{result.weight_difference})",
-#                    size: 'md',
-#                    weight: 'bold',
-#                    wrap: true
-#                  }
-#                ]
-#              }
-#            ]
-#          },
-#          styles: {
-#            header: {
-#              backgroundColor: self.grade_color(result.race_info.race.grade)
-#            }
-#          }
-#        }
-#      end
+      horse.horse_race_results.joins(:race_info).order("race_infos.event_date desc").limit(limit).each do |result|
+        contents_body << {
+          type: 'bubble',
+          header: {
+            type: 'box',
+            layout: 'vertical',
+            contents: [
+              {
+                type: 'text',
+                text: "#{result.race_info.race.name}(#{result.race_info.race.grade})",
+                size: 'xl',
+                weight: 'bold',
+                color: '#ffffff'
+              }
+            ]
+          },
+          body: {
+            type: 'box',
+            layout: 'horizontal',
+            spacing: 'md',
+            contents: [
+              {
+                type: 'box',
+                layout: 'vertical',
+                flex: 1,
+                contents: [
+                  {
+                    type: 'image',
+                    url: self.order_place_img(url, result),
+                    aspectRatio: '1:1',
+                    margin: "lg",
+                    size: 'lg'
+                  }
+                ]
+              },
+              {
+                type: 'box',
+                layout: 'vertical',
+                flex: 5,
+                contents: [
+                  {
+                    type: 'text',
+                    text: "着 #{result.jokey.name}(#{result.basis_weight})",
+                    size: 'lg',
+                    weight: 'bold',
+                    wrap: true
+                  },
+                  {
+                    type: 'separator'
+                  },
+                  {
+                    type: 'text',
+                    text: "#{result.race_info.event_date.strftime('%Y/%m/%d')} #{result.race_info.race.course.name}#{result.race_info.race_round}R",
+                    size: 'md',
+                    weight: 'bold',
+                    wrap: true
+                  },
+                  {
+                    type: 'separator'
+                  },
+                  {
+                    type: 'text',
+                    text: "#{result.race_info.race.course_type}#{result.race_info.race.distance}m #{result.accomplishment_time} #{result.race_info.course_status}",
+                    size: 'md',
+                    weight: 'bold',
+                    wrap: true
+                  },
+                  {
+                    type: 'separator'
+                  },
+                  {
+                    type: 'text',
+                    text: "#{result.post_position}枠#{result.horse_number}番#{result.popularity}人 #{result.odds}倍",
+                    size: 'md',
+                    weight: 'bold',
+                    wrap: true
+                  },
+                  {
+                    type: 'separator'
+                  },
+                  {
+                    type: 'text',
+                    text: "#{result.passing_info}(#{result.time_for_3f}) #{result.weight}(#{result.weight_difference})",
+                    size: 'md',
+                    weight: 'bold',
+                    wrap: true
+                  }
+                ]
+              }
+            ]
+          },
+          styles: {
+            header: {
+              backgroundColor: self.grade_color(result.race_info.race.grade)
+            }
+          }
+        }
+      end
 
       contents = {
         type: 'carousel',
