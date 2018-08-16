@@ -168,14 +168,28 @@ module Api
                   },
                   {
                     type: 'text',
-                    text: "#{result[18]}(#{result[20]}) #{result[21]})",
+                    text: "#{result[18]}(#{result[20]})",
                     size: 'md',
                     weight: 'bold',
                     wrap: true
                   },
                   {
                     type: 'text',
-                    text: "勝ち馬: #{result[22]} 着差: #{result[17]})",
+                    text: "馬体重: #{result[21]}",
+                    size: 'md',
+                    weight: 'bold',
+                    wrap: true
+                  },
+                  {
+                    type: 'text',
+                    text: "勝ち馬: #{result[22]}",
+                    size: 'md',
+                    weight: 'bold',
+                    wrap: true
+                  }
+                  {
+                    type: 'text',
+                    text: "着差: #{result[17]}",
                     size: 'md',
                     weight: 'bold',
                     wrap: true
@@ -298,49 +312,36 @@ module Api
       count = 0
       trs.each do |tr|
         count += 1
-        text = tr.inner_text.gsub(/(\n)+/, ' ').split(' ').reject(&:blank?)
-        text.delete("**")
+        tds = tr.search("td")
     
-        event_date = text[0]
-        course_info = text[1]
-        weather = text[2]
-        race_round = text[3]
-        race_name = text[4]
+        event_date = tds[0].inner_text
+        course_info = tds[1].inner_text
+        weather = tds[2].inner_text
+        race_round = tds[3].inner_text
+        race_name = tds[4].inner_text
         # 映像
-        horse_count = text[5]
-        post_position = text[6]
-        horse_number = text[7]
-        odds = text[8]
-        popularity = text[9]
-        order_of_placing = text[10]
-        jokey_name = text[11]
-        basis_weight = text[12]
-        distance_info = text[13]
-        course_status = text[14]
+        horse_count = tds[6].inner_text
+        post_position = tds[7].inner_text
+        horse_number = tds[8].inner_text
+        odds = tds[9].inner_text
+        popularity = tds[10].inner_text
+        order_of_placing = tds[11].inner_text
+        jokey_name = tds[12].inner_text
+        basis_weight = tds[13].inner_text
+        distance_info = tds[14].inner_text
+        course_status = tds[15].inner_text
         # 指数
-        accomplishment_time = text[15]
-        margin = text[16]
-        if course_info.include?('新潟') && distance_info.include?('1000')
+        accomplishment_time = tds[17].inner_text
+        margin = tds[18].inner_text
         # タイム指数
-          passing_info = nil
-          pace = text[17]
-          time_for_3f = text[18]
-          weight_info = text[19]
-          # 厩舎コメント
-          # 備考
-          winner_horse = text[20]
-          prize = text[21]
-        else
-        # タイム指数
-          passing_info = text[17]
-          pace = text[18]
-          time_for_3f = text[19]
-          weight_info = text[20]
-          # 厩舎コメント
-          # 備考
-          winner_horse = text[21]
-          prize = text[22]
-        end
+        passing_info = tds[20].inner_text
+        pace = tds[21].inner_text
+        time_for_3f = tds[22].inner_text
+        weight_info = tds[23].inner_text
+        # 厩舎コメント
+        # 備考
+        winner_horse = tds[26].inner_text
+        prize = tds[27].inner_text
     
         #競馬場を取得
         unless course_info =~ /^\d+.*\d+$/
@@ -373,10 +374,6 @@ module Api
           break
         end
       end
-    end
-
-    def self.order_place_img(url, result)
-      url + "/assets/order_of_placing/order_of_placing-#{result.order_of_placing}.jpg"
     end
 
     def self.grade_color(grade)

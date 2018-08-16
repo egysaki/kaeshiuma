@@ -95,19 +95,19 @@ task active: :environment do
   trs.each do |tr|
     count += 1
 
-    p tr.search("td").size
-    text = tr.inner_text.gsub(/(\n)+/, ' ').split(' ').reject(&:blank?)
-    #p text.size
+    tds = tr.search("td")
+    #text = tr.inner_text.gsub(/(\n)+/, ' ').split(' ')#.reject(&:blank?)
     #text = tr.inner_text.gsub(/(\n)+/, ' ').split(' ').reject(&:blank?)
-    text.delete("**")
+    #text.delete("**")
 
-    event_date = text[0]
-    course_info = text[1]
-    weather = text[2]
-    race_round = text[3]
-    race_name = text[4]
+    event_date = tds[0]
+    course_info = tds[1]
+    weather = tds[2]
+    race_round = tds[3]
+    puts race_name = tds[4].inner_text
     # 映像
-    horse_count = text[5]
+    horse_count = tds[6]
+    break
     post_position = text[6]
     horse_number = text[7]
     odds = text[8]
