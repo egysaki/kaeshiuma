@@ -20,7 +20,7 @@ module Api
         },
         hero: {
           type: 'image',
-          url: "#{url}#{horse.src_path}",
+          url: "https://kaeshiuma.herokuapp.com/assets/horse/アーモンドアイ.jpg",
           size: 'full',
           aspectMode: 'cover'
         },
