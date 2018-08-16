@@ -18,12 +18,6 @@ module Api
             }
           ]
         },
-        hero: {
-          type: 'image',
-          url: url + horse.src_path,
-          size: 'full',
-          aspectMode: 'cover'
-        },
         body: {
           type: 'box',
           layout: 'vertical',
@@ -48,13 +42,21 @@ module Api
               wrap: true
             }
           ]
-        },
-        styles: {
-          header: {
-            backgroundColor: '#006400'
-          }
         }
       }
+
+#        hero: {
+#          type: 'image',
+#          url: url + horse.src_path,
+#          size: 'full',
+#          aspectMode: 'cover'
+#        },
+
+#        styles: {
+#          header: {
+#            backgroundColor: '#006400'
+#          }
+#        }
 
 #      horse.horse_race_results.joins(:race_info).order("race_infos.event_date desc").limit(limit).each do |result|
 #        contents_body << {
