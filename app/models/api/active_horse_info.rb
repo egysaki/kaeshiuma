@@ -146,7 +146,7 @@ module Api
                   },
                   {
                     type: 'text',
-                    text: "#{result[14]}m  #{result[16]} #{result[15]}",
+                    text: "#{result[14]}m  #{result[6]}頭  #{result[16]} #{result[15]}",
                     size: 'md',
                     weight: 'bold'
                   },

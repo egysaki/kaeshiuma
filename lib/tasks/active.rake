@@ -8,6 +8,7 @@ task active: :environment do
 
   uri = 'http://db.netkeiba.com/?pid=horse_search_detail'
   page = agent.get(uri)
+  sleep 1
   form = page.forms[1]
   form.word = horse_name
   form.checkbox_with(name: 'match').check
@@ -40,12 +41,6 @@ task active: :environment do
 
   horse_title = node.search("div[@class='horse_title']")
   name = horse_title.inner_text.strip
- # origin_name = name
- # if name.include?("外")
- #   name = origin_name.split(/外/)[1].split(/[[:blank:]]/)[0]
- # elsif name.include?("地")
- #   name = origin_name.split(/地/)[1].split(/[[:blank:]]/)[0]
- # end
   name = name.split(/[[:blank:]]/)[0]
 
   status = horse_title.search("p[@class='txt_01']").inner_text.split(/[[:blank:]]/)
@@ -94,53 +89,36 @@ task active: :environment do
   trs = node.search("tbody tr")
   trs.each do |tr|
     count += 1
-
     tds = tr.search("td")
-    #text = tr.inner_text.gsub(/(\n)+/, ' ').split(' ')#.reject(&:blank?)
-    #text = tr.inner_text.gsub(/(\n)+/, ' ').split(' ').reject(&:blank?)
-    #text.delete("**")
-
-    event_date = tds[0]
-    course_info = tds[1]
-    weather = tds[2]
-    race_round = tds[3]
-    puts race_name = tds[4].inner_text
+    
+    event_date = tds[0].inner_text
+    course_info = tds[1].inner_text
+    weather = tds[2].inner_text
+    race_round = tds[3].inner_text
+    race_name = tds[4].inner_text
     # 映像
-    horse_count = tds[6]
-    break
-    post_position = text[6]
-    horse_number = text[7]
-    odds = text[8]
-    popularity = text[9]
-    order_of_placing = text[10]
-    jokey_name = text[11]
-    basis_weight = text[12]
-    distance_info = text[13]
-    course_status = text[14]
+    horse_count = tds[6].inner_text
+    post_position = tds[7].inner_text
+    horse_number = tds[8].inner_text
+    odds = tds[9].inner_text
+    popularity = tds[10].inner_text
+    order_of_placing = tds[11].inner_text
+    jokey_name = tds[12].inner_text
+    basis_weight = tds[13].inner_text
+    distance_info = tds[14].inner_text
+    course_status = tds[15].inner_text
     # 指数
-    accomplishment_time = text[15]
-    margin = text[16]
-    if course_info.include?('新潟') && distance_info.include?('1000')
+    accomplishment_time = tds[17].inner_text
+    margin = tds[18].inner_text
     # タイム指数
-      passing_info = nil
-      pace = text[17]
-      time_for_3f = text[18]
-      weight_info = text[19]
-      # 厩舎コメント
-      # 備考
-      winner_horse = text[20]
-      prize = text[21]
-    else
-    # タイム指数
-      passing_info = text[17]
-      pace = text[18]
-      time_for_3f = text[19]
-      weight_info = text[20]
-      # 厩舎コメント
-      # 備考
-      winner_horse = text[21]
-      prize = text[22]
-    end
+    passing_info = tds[20].inner_text
+    pace = tds[21].inner_text
+    time_for_3f = tds[22].inner_text
+    weight_info = tds[23].inner_text
+    # 厩舎コメント
+    # 備考
+    winner_horse = tds[26].inner_text
+    prize = tds[27].inner_text
 
     #競馬場を取得
     unless course_info =~ /^\d+.*\d+$/
@@ -169,22 +147,6 @@ task active: :environment do
       grade = nil
     end
     race_results << [event_date,course,weather,race_round,race_name,grade,horse_count,post_position,horse_number,odds,popularity,order_of_placing,jokey_name,basis_weight,distance_info,course_status,accomplishment_time,margin,passing_info,pace,time_for_3f,weight_info,winner_horse,prize]
-  #        course_type = distance_info.gsub(/\d+/, '')
-  #        distance = distance_info.gsub(/芝|ダ/, '')
-  #        race = Race.find_or_create_by(name: race_name, distance: distance.to_i, course_id: course.id, grade: grade, course_type: course_type)
-
-  #        race_round = course_info.slice(/\d+$/)
-  #        race_info = RaceInfo.find_or_create_by(race_id: race.id, course_status: course_status, event_date: event_date, race_round: race_round, weather: weather)
-
-  #        jokey = Jokey.find_or_create_by(name: jokey_name)
-
-  #        weight = weight_info.split(/\(/)[0].to_i
-  #        weight_difference = weight_info.split(/\(/)[1].gsub(/\)/, '')
-  #        horse_race_result = HorseRaceResult.find_or_create_by(horse_id: horse.id, race_info_id: race_info.id)
-  #        horse_race_result.update!(accomplishment_time: accomplishment_time, time_for_3f: time_for_3f, order_of_placing: order_of_placing, passing_info: passing_info, weight: weight, basis_weight: basis_weight, popularity: popularity, post_position: post_position, horse_number: horse_number, margin: margin.to_i, odds: odds, weight_difference: weight_difference, pace: pace, jokey_id: jokey.id)
-  #    end
-    
-  
   end
   p horse_info
   race_results.each do |result|
