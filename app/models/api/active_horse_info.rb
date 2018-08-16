@@ -126,7 +126,7 @@ module Api
                 contents: [
                   {
                     type: 'image',
-                    url: self.order_place_img(url, result[11]),
+                    url: url + "/assets/order_of_placing/order_of_placing-" + result[11] + ".jpg"
                     aspectRatio: '1:1',
                     margin: "lg",
                     size: 'lg'
@@ -279,8 +279,16 @@ module Api
       father = blood_table.search("tr[1]/td[1]/a").inner_text
       mother = blood_table.search("tr[3]/td[1]/a").inner_text
       g_father = blood_table.search("tr[3]/td[2]/a").inner_text
+
+      #画像
+      photo = node.search("//*[@id='HorseMainPhoto']").at('img')
+      if photo
+        src_path = node.search("//*[@id='HorseMainPhoto']").at('img')['src']
+      else
+        src_path = nil
+      end
     
-      @horse_info = [name,active_status,sex,age,hair_color_type,birth_day,trainer,owner,producer,prize,result,father,mother,g_father]
+      @horse_info = [name,active_status,sex,age,hair_color_type,birth_day,trainer,owner,producer,prize,result,father,mother,g_father,src_path]
       
       #レース情報
       node = page.search("table[@class='db_h_race_results nk_tb_common']")

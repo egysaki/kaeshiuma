@@ -1,6 +1,7 @@
 task active: :environment do
 #def self.get_info(horse_name)
-  horse_name ="アーモンドアイ"
+  #horse_name ="アーモンドアイ"
+  horse_name ="レイデオロ"
   #horse_name ="レインボーライン"
   #horse_name ="フロンティア"
   agent = Mechanize.new
@@ -75,7 +76,15 @@ task active: :environment do
   mother = blood_table.search("tr[3]/td[1]/a").inner_text
   g_father = blood_table.search("tr[3]/td[2]/a").inner_text
 
-  horse_info = [name,active_status,sex,age,hair_color_type,birth_day,trainer,owner,producer,prize,result,father,mother,g_father]
+  #画像
+  photo = node.search("//*[@id='HorseMainPhoto']").at('img')
+  if photo
+    src_path = node.search("//*[@id='HorseMainPhoto']").at('img')['src']
+  else
+    src_path = nil
+  end
+
+  horse_info = [name,active_status,sex,age,hair_color_type,birth_day,trainer,owner,producer,prize,result,father,mother,g_father,src_path]
   
   #レース情報
   node = page.search("table[@class='db_h_race_results nk_tb_common']")
