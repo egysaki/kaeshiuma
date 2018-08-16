@@ -186,7 +186,7 @@ module Api
                     size: 'md',
                     weight: 'bold',
                     wrap: true
-                  }
+                  },
                   {
                     type: 'text',
                     text: "着差: #{result[17]}",
@@ -234,6 +234,7 @@ module Api
     
       uri = 'http://db.netkeiba.com/?pid=horse_search_detail'
       page = agent.get(uri)
+      sleep 1
       form = page.forms[1]
       form.word = horse_name
       form.checkbox_with(name: 'match').check

@@ -2,7 +2,3 @@
 
 <%= link_to '画像1', '/assets/course/tokyo-dirt-1300.jpg' %>
 
-<% horse = Horse.first %>
-<%= link_to horse.name, horse.src_path %>
-<%= url = root_url(only_path: false) %>
-<%= url + horse.src_path %>
