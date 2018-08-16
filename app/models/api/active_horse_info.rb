@@ -126,7 +126,7 @@ module Api
                 contents: [
                   {
                     type: 'image',
-                    url: url + "/assets/order_of_placing/order_of_placing-" + result[11] + ".jpg"
+                    url: url + "/assets/order_of_placing/order_of_placing-" + result[11] + ".jpg",
                     aspectRatio: '1:1',
                     margin: "lg",
                     size: 'lg'

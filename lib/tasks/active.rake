@@ -95,7 +95,10 @@ task active: :environment do
   trs.each do |tr|
     count += 1
 
+    p tr.search("td").size
     text = tr.inner_text.gsub(/(\n)+/, ' ').split(' ').reject(&:blank?)
+    #p text.size
+    #text = tr.inner_text.gsub(/(\n)+/, ' ').split(' ').reject(&:blank?)
     text.delete("**")
 
     event_date = text[0]
