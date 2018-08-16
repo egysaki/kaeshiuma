@@ -11,18 +11,30 @@ module Api
           contents: [
             {
               type: 'text',
-              text: "#{horse.name} #{horse.sex}#{horse.age}歳",
+              text: "#{horse.name}",
               size: 'xl',
               color: '#ffffff',
               weight: 'bold'
             }
           ]
         },
+        hero: {
+          type: 'image',
+          url: "#{url}#{horse.src_path}",
+          size: 'full',
+          aspectMode: 'cover'
+        },
         body: {
           type: 'box',
           layout: 'vertical',
           flex: 1,
           contents: [
+            {
+              type: 'text',
+              text: "#{horse.sex}#{horse.age}歳",
+              size: 'lg',
+              wrap: true
+            },
             {
               type: 'text',
               text: "父: #{horse.father.name}",
@@ -42,21 +54,15 @@ module Api
               wrap: true
             }
           ]
+        },
+        styles: {
+          header: {
+            backgroundColor: '#006400'
+          }
         }
       }
 
-#        hero: {
-#          type: 'image',
-#          url: url + horse.src_path,
-#          size: 'full',
-#          aspectMode: 'cover'
-#        },
 
-#        styles: {
-#          header: {
-#            backgroundColor: '#006400'
-#          }
-#        }
 
 #      horse.horse_race_results.joins(:race_info).order("race_infos.event_date desc").limit(limit).each do |result|
 #        contents_body << {
