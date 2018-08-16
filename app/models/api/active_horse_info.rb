@@ -17,7 +17,7 @@ module Api
           contents: [
             {
               type: 'text',
-              text: @horse_info[0],
+              text: "#{@horse_info[0]} #{@horse_info[2]}#{@horse_info[3]}歳",
               size: 'xl',
               color: '#ffffff',
               weight: 'bold'
@@ -29,12 +29,6 @@ module Api
           layout: 'vertical',
           flex: 1,
           contents: [
-            {
-              type: 'text',
-              text: "#{@horse_info[2]}#{@horse_info[3]}歳 #{@horse_info[4]}",
-              size: 'lg',
-              wrap: true
-            },
             {
               type: 'text',
               text: "生年月日: #{@horse_info[5]}",
@@ -142,57 +136,49 @@ module Api
                     type: 'text',
                     text: "着 #{result[12]}(#{result[13]})",
                     size: 'lg',
-                    weight: 'bold',
-                    wrap: true
+                    weight: 'bold'
                   },
                   {
                     type: 'text',
-                    text: "#{result[0]} #{result[1]}#{result[3]}R",
+                    text: "#{result[0]}   #{result[1]} #{result[3]}R",
                     size: 'md',
-                    weight: 'bold',
-                    wrap: true
+                    weight: 'bold'
                   },
                   {
                     type: 'text',
-                    text: "#{result[14]}m #{result[16]} #{result[15]}",
+                    text: "#{result[14]}m  #{result[16]} #{result[15]}",
                     size: 'md',
-                    weight: 'bold',
-                    wrap: true
+                    weight: 'bold'
                   },
                   {
                     type: 'text',
                     text: "#{result[7]}枠#{result[8]}番#{result[10]}人 #{result[9]}倍",
                     size: 'md',
-                    weight: 'bold',
-                    wrap: true
+                    weight: 'bold'
                   },
                   {
                     type: 'text',
-                    text: "#{result[18]}(#{result[20]})",
+                    text: "#{result[18]} (#{result[20]})",
                     size: 'md',
-                    weight: 'bold',
-                    wrap: true
+                    weight: 'bold'
                   },
                   {
                     type: 'text',
                     text: "馬体重: #{result[21]}",
                     size: 'md',
-                    weight: 'bold',
-                    wrap: true
+                    weight: 'bold'
                   },
                   {
                     type: 'text',
                     text: "勝ち馬: #{result[22]}",
                     size: 'md',
-                    weight: 'bold',
-                    wrap: true
+                    weight: 'bold'
                   },
                   {
                     type: 'text',
                     text: "着差: #{result[17]}",
                     size: 'md',
-                    weight: 'bold',
-                    wrap: true
+                    weight: 'bold'
                   }
                 ]
               }
