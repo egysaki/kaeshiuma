@@ -69,19 +69,22 @@ module Api
               type: 'text',
               text: "父: #{@horse_info[11]}",
               size: 'lg',
-              wrap: true
+              wrap: true,
+              gravity: 'bottom'
             },
             {
               type: 'text',
               text: "母: #{@horse_info[12]}",
               size: 'lg',
-              wrap: true
+              wrap: true,
+              gravity: 'bottom'
             },
             {
               type: 'text',
               text: "母父: #{@horse_info[13]}",
               size: 'lg',
-              wrap: true
+              wrap: true,
+              gravity: 'bottom'
             }
           ]
         },
@@ -131,6 +134,7 @@ module Api
                 type: 'box',
                 layout: 'vertical',
                 flex: 5,
+                spacing: 'md',
                 contents: [
                   {
                     type: 'text',
@@ -142,43 +146,44 @@ module Api
                     type: 'text',
                     text: "#{result[0]}   #{result[1]} #{result[3]}R",
                     size: 'md',
-                    weight: 'bold'
+                    weight: 'bold',
+                    gravity: 'bottom'
                   },
                   {
                     type: 'text',
-                    text: "#{result[14]}m  #{result[6]}頭  #{result[16]} #{result[15]}",
+                    text: "#{result[14]}m #{result[15]} #{result[16]}",
                     size: 'md',
-                    weight: 'bold'
+                    weight: 'bold',
+                    gravity: 'bottom'
                   },
                   {
                     type: 'text',
-                    text: "#{result[7]}枠#{result[8]}番#{result[10]}人 #{result[9]}倍",
+                    text: "#{result[6]}頭 #{result[7]}枠#{result[8]}番#{result[10]}人 #{result[9]}倍",
                     size: 'md',
-                    weight: 'bold'
+                    weight: 'bold',
+                    gravity: 'bottom'
                   },
                   {
                     type: 'text',
                     text: "#{result[18]} (#{result[20]})",
                     size: 'md',
-                    weight: 'bold'
+                    weight: 'bold',
+                    color: self.f_rank_color(result[24]),
+                    gravity: 'bottom'
                   },
                   {
                     type: 'text',
                     text: "馬体重: #{result[21]}",
                     size: 'md',
-                    weight: 'bold'
+                    weight: 'bold',
+                    gravity: 'bottom'
                   },
                   {
                     type: 'text',
-                    text: "勝ち馬: #{result[22]}",
+                    text: "勝ち馬: #{result[22]} (#{result[17]})",
                     size: 'md',
-                    weight: 'bold'
-                  },
-                  {
-                    type: 'text',
-                    text: "着差: #{result[17]}",
-                    size: 'md',
-                    weight: 'bold'
+                    weight: 'bold',
+                    gravity: 'bottom'
                   }
                 ]
               }
@@ -212,6 +217,19 @@ module Api
         '#008000'
       else
         '#696969'
+      end
+    end
+
+    def self.f_rank_color(f_rank)
+      case f_rank
+      when 1
+        '#ffa500'
+      when 2
+        '#00ced1'
+      when 3
+        '#b22222'
+      else
+        '#434343'
       end
     end
 
@@ -324,6 +342,15 @@ module Api
         passing_info = tds[20].inner_text
         pace = tds[21].inner_text
         time_for_3f = tds[22].inner_text
+        if tds[22].to_s.include?('rank_1')
+          f_rank = 1
+        elsif tds[22].to_s.include?('rank_2')
+          f_rank = 2
+        elsif tds[22].to_s.include?('rank_3')
+          f_rank = 3
+        else
+          f_rank = nil
+        end
         weight_info = tds[23].inner_text
         # 厩舎コメント
         # 備考
@@ -356,23 +383,10 @@ module Api
         else
           grade = nil
         end
-        @race_results << [event_date,course,weather,race_round,race_name,grade,horse_count,post_position,horse_number,odds,popularity,order_of_placing,jokey_name,basis_weight,distance_info,course_status,accomplishment_time,margin,passing_info,pace,time_for_3f,weight_info,winner_horse,prize]
+        @race_results << [event_date,course,weather,race_round,race_name,grade,horse_count,post_position,horse_number,odds,popularity,order_of_placing,jokey_name,basis_weight,distance_info,course_status,accomplishment_time,margin,passing_info,pace,time_for_3f,weight_info,winner_horse,prize,f_rank]
         if count >= limit.to_i
           break
         end
-      end
-    end
-
-    def self.grade_color(grade)
-      case grade
-      when 'G1'
-        '#000066'
-      when 'G2'
-        '#cc0000'
-      when 'G3'
-        '#008000'
-      else
-        '#696969'
       end
     end
 

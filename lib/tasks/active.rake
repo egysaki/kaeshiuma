@@ -114,6 +114,15 @@ task active: :environment do
     passing_info = tds[20].inner_text
     pace = tds[21].inner_text
     time_for_3f = tds[22].inner_text
+    if tds[22].to_s.include?('rank_1')
+      f_rank = 1
+    elsif tds[22].to_s.include?('rank_2')
+      f_rank = 2
+    elsif tds[22].to_s.include?('rank_3')
+      f_rank = 3
+    else
+      f_rank = nil
+    end
     weight_info = tds[23].inner_text
     # 厩舎コメント
     # 備考
@@ -146,7 +155,7 @@ task active: :environment do
     else
       grade = nil
     end
-    race_results << [event_date,course,weather,race_round,race_name,grade,horse_count,post_position,horse_number,odds,popularity,order_of_placing,jokey_name,basis_weight,distance_info,course_status,accomplishment_time,margin,passing_info,pace,time_for_3f,weight_info,winner_horse,prize]
+    race_results << [event_date,course,weather,race_round,race_name,grade,horse_count,post_position,horse_number,odds,popularity,order_of_placing,jokey_name,basis_weight,distance_info,course_status,accomplishment_time,margin,passing_info,pace,time_for_3f,weight_info,winner_horse,prize,f_rank]
   end
   p horse_info
   race_results.each do |result|
