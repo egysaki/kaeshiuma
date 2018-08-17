@@ -1,5 +1,4 @@
 task active: :environment do
-#def self.get_info(horse_name)
   #horse_name ="アーモンドアイ"
   horse_name ="レイデオロ"
   #horse_name ="レインボーライン"
@@ -161,5 +160,4 @@ task active: :environment do
   race_results.each do |result|
   p result
   end
-#end
 end
