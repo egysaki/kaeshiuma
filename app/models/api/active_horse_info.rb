@@ -17,7 +17,7 @@ module Api
           contents: [
             {
               type: 'text',
-              text: "#{@horse_info[0]} #{@horse_info[2]}#{@horse_info[3]}歳",
+              text: "#{@horse_info[0]}  #{@horse_info[2]}#{@horse_info[3]}",
               size: 'xl',
               color: '#ffffff',
               weight: 'bold'
