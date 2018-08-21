@@ -165,17 +165,17 @@ module Api
                   },
                   {
                     type: 'text',
-                    text: "#{result[25]}歳",
-                    size: 'md',
-                    weight: 'bold',
-                    gravity: 'bottom'
-                  },
-                  {
-                    type: 'text',
                     text: "#{result[18]} (#{result[20]})",
                     size: 'md',
                     weight: 'bold',
                     color: self.f_rank_color(result[24]),
+                    gravity: 'bottom'
+                  },
+                  {
+                    type: 'text',
+                    text: "#{result[25]}歳",
+                    size: 'md',
+                    weight: 'bold',
                     gravity: 'bottom'
                   },
                   {
@@ -190,6 +190,7 @@ module Api
                     text: "勝ち馬: #{result[22]} (#{result[17]})",
                     size: 'md',
                     weight: 'bold',
+                    wrap: true,
                     gravity: 'bottom'
                   }
                 ]
