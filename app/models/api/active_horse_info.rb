@@ -165,6 +165,13 @@ module Api
                   },
                   {
                     type: 'text',
+                    text: "#{result[25]}歳",
+                    size: 'md',
+                    weight: 'bold',
+                    gravity: 'bottom'
+                  },
+                  {
+                    type: 'text',
                     text: "#{result[18]} (#{result[20]})",
                     size: 'md',
                     weight: 'bold',
@@ -320,6 +327,7 @@ module Api
         tds = tr.search("td")
     
         event_date = tds[0].inner_text
+        age = event_date.slice(/\d*/).to_i - birth_day.slice(/\d*/).to_i
         course_info = tds[1].inner_text
         weather = tds[2].inner_text
         race_round = tds[3].inner_text
@@ -383,7 +391,8 @@ module Api
         else
           grade = nil
         end
-        @race_results << [event_date,course,weather,race_round,race_name,grade,horse_count,post_position,horse_number,odds,popularity,order_of_placing,jokey_name,basis_weight,distance_info,course_status,accomplishment_time,margin,passing_info,pace,time_for_3f,weight_info,winner_horse,prize,f_rank]
+
+        @race_results << [event_date,course,weather,race_round,race_name,grade,horse_count,post_position,horse_number,odds,popularity,order_of_placing,jokey_name,basis_weight,distance_info,course_status,accomplishment_time,margin,passing_info,pace,time_for_3f,weight_info,winner_horse,prize,f_rank,age]
         if count >= limit.to_i
           break
         end

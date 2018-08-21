@@ -78,7 +78,13 @@ task active: :environment do
     src_path = nil
   end
 
-  horse_info = [name,active_status,sex,age,hair_color_type,birth_day,trainer,owner,producer,prize,result,father,mother,g_father,src_path]
+  next_info = node.search("div[@id='HorseNextInfo_01_box']").inner_text
+  p db_main_box.search("div[@id='HorseNextInfo_01_box']")
+  p node.search("#HorseNextInfo_01_box")
+  p node.search(".Common_Tab_Box")
+  p db_main_box.search("div[@id='HorseInfo'] dd")
+
+  horse_info = [name,active_status,sex,age,hair_color_type,birth_day,trainer,owner,producer,prize,result,father,mother,g_father,src_path,next_info]
   
   #レース情報
   node = page.search("table[@class='db_h_race_results nk_tb_common']")
@@ -154,6 +160,7 @@ task active: :environment do
     else
       grade = nil
     end
+  p event_date.slice(/\d*/).to_i - birth_day.slice(/\d*/).to_i
     race_results << [event_date,course,weather,race_round,race_name,grade,horse_count,post_position,horse_number,odds,popularity,order_of_placing,jokey_name,basis_weight,distance_info,course_status,accomplishment_time,margin,passing_info,pace,time_for_3f,weight_info,winner_horse,prize,f_rank]
   end
   p horse_info
