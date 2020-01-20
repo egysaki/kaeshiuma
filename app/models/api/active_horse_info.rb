@@ -3,7 +3,7 @@ module Api
 
     def self.return_horse_info(horse_name, url, course_designed, limit = 5)
 
-      self.get_info(horse_name, course_desinged, limit)
+      self.get_info(horse_name, course_designed, limit)
       if @undefined
         return false
       end
