@@ -244,7 +244,7 @@ module Api
     def self.get_info(horse_name, limit)
       agent = Mechanize.new
     
-      uri = 'http://db.netkeiba.com/?pid=horse_search_detail'
+      uri = 'https://db.netkeiba.com/?pid=horse_search_detail'
       page = agent.get(uri)
       sleep 1
       form = page.forms[1]
@@ -256,13 +256,13 @@ module Api
       form.list = 100
       search_result_page = agent.submit(form)
     
-      if search_result_page.uri.to_s == 'http://db.netkeiba.com/'
+      if search_result_page.uri.to_s == 'https://db.netkeiba.com/'
         if search_result_page.at("table[@class='nk_tb_common race_table_01'] td").blank?
           @undefined = true
           return
         else
           link = search_result_page.at("table[@class='nk_tb_common race_table_01'] td a")[:href]
-          @info_uri = "http://db.netkeiba.com#{link}"
+          @info_uri = "https://db.netkeiba.com#{link}"
         end
       elsif search_result_page.uri.to_s.include?('/horse/')
         @info_uri = search_result_page.uri.to_s
