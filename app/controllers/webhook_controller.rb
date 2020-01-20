@@ -61,7 +61,7 @@ class WebhookController < ApplicationController
          #   contents = Api::HorseInfo.return_horse_info(horse, url, limit)
           else
             horse_name = event.message['text'].gsub(/\d+| /, '')
-            course_designed = input.match(/[一-龠々]+/).to_s
+            course_designed = event.message['text'].match(/[一-龠々]+/).to_s
             limit = event.message['text'].slice(/\w+/).to_i
             contents = Api::ActiveHorseInfo.return_horse_info(horse_name, url, course_designed, limit)
             if contents
