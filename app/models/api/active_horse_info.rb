@@ -1,9 +1,9 @@
 module Api
   class ActiveHorseInfo
 
-    def self.return_horse_info(horse_name, url, limit = 5)
+    def self.return_horse_info(horse_name, url, course_designed, limit = 5)
 
-      self.get_info(horse_name, limit)
+      self.get_info(horse_name, course_desinged, limit)
       if @undefined
         return false
       end
@@ -241,7 +241,7 @@ module Api
       end
     end
 
-    def self.get_info(horse_name, limit)
+    def self.get_info(horse_name, course_designed, limit)
       agent = Mechanize.new
     
       uri = 'https://db.netkeiba.com/?pid=horse_search_detail'
@@ -324,7 +324,7 @@ module Api
       trs = node.search("tbody tr")
       count = 0
       trs.each do |tr|
-        count += 1
+
         tds = tr.search("td")
     
         event_date = tds[0].inner_text
@@ -372,6 +372,13 @@ module Api
         else
           course = course_info.gsub(/\d+/, '')
         end
+
+        if course_designed.present?
+          if course_designed != course
+            next
+          end
+        end
+        count += 1
     
         #レース名とグレードを取得
         if race_name =~ (/\(.*\)/)
